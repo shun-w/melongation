@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class UserService implements UserDetailsService {
+public class UserService  {
 
     @Autowired
     private UserMapper userMapper;
@@ -24,8 +24,4 @@ public class UserService implements UserDetailsService {
 
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        return null;
-    }
 }
