@@ -11,7 +11,7 @@ username varchar(10),
 `password` varchar(20),
 image varchar(100),
 email varchar(30)
-)
+);
 
 
 create table `user`(
@@ -20,7 +20,7 @@ username varchar(10),
 `password` varchar(20),
 image varchar(100),
 email varchar(30),
-isActive tinyint
+is_active tinyint
 );
 
 

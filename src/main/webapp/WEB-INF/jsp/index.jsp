@@ -1,14 +1,15 @@
-<!DOCTYPE html>
+<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
+${msg}<hr>
 <h2>欢迎来到Melongation</h2>
 <hr>
 <a href="admin/login.html">普通用户登录</a><br>
-<a href="user/login.html">管理员登陆</a>
+<a href="user/login.jsp">管理员登陆</a>
 <br>
 </body>
 </html>

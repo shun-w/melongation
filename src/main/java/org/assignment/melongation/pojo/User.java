@@ -1,6 +1,6 @@
 package org.assignment.melongation.pojo;
 
-public class UserInfo {
+public class User {
     private Integer id;
     private String username;
     private String password;
@@ -8,10 +8,10 @@ public class UserInfo {
     private String email;
     private Boolean isActive;
 
-    public UserInfo() {
+    public User() {
     }
 
-    public UserInfo(Integer id, String username, String password, String image, String email, Boolean isActive) {
+    public User(Integer id, String username, String password, String image, String email, Boolean isActive) {
         this.id = id;
         this.username = username;
         this.password = password;

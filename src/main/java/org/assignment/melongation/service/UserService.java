@@ -1,27 +1,24 @@
 package org.assignment.melongation.service;
 
-
-import org.assignment.melongation.mapper.UserMapper;
-import org.assignment.melongation.pojo.UserInfo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
+import org.assignment.melongation.pojo.User;
 
 import java.util.List;
 
-@Service
-public class UserService  {
+/**
+ * 用户服务
+ */
+public interface UserService {
+    /**
+     * 查询所有用户
+     * @return 所有用户列表
+     */
+    public List<User> findAll();
 
-    @Autowired
-    private UserMapper userMapper;
-
-    public List<UserInfo> findAll() {
-        List<UserInfo> users = userMapper.findAll();
-        return users;
-
-    }
-
+    /**
+     * 用户登录
+     * @param username
+     * @param password
+     * @return
+     */
+    public User login(String username, String password);
 }
