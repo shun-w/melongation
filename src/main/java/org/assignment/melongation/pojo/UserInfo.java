@@ -6,16 +6,26 @@ public class UserInfo {
     private String password;
     private String image;
     private String email;
+    private Boolean isActive;
 
     public UserInfo() {
     }
 
-    public UserInfo(Integer id, String username, String password, String image, String email) {
+    public UserInfo(Integer id, String username, String password, String image, String email, Boolean isActive) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.image = image;
         this.email = email;
+        this.isActive = isActive;
+    }
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
     }
 
     public Integer getId() {
