@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>用户登录</title>
     <script>
         url = "/getCode";
         window.onload=function (ev) {
@@ -15,14 +15,15 @@
 </head>
 <body>
 登录
-<form action="/login" method="post">
-    <input type="username"><br>
-    <input type="password"><br>
+<form action="/user/login" method="post">
+    <input type="username" name="username"><br>
+    <input type="password" name="password"><br>
     请输入验证码：<input type="text" name="checkCode" style="width: 80px;"/>
     <img id="checkCodeImg" alt="验证码" src="#">
     <a href="#" onclick="changeCheckCode()">换一张</a><br/>
     <input type="reset" value="重置">
     <input type="submit" value="登录">
+    <div>${msg}</div>
 </form>
 </body>
 </html>

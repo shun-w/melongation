@@ -8,8 +8,8 @@
 ${msg}<hr>
 <h2>欢迎来到Melongation</h2>
 <hr>
-<a href="admin/login.html">普通用户登录</a><br>
-<a href="user/login.jsp">管理员登陆</a>
+<a href="/user/login">普通用户登录</a><br>
+<a href="#">管理员登陆</a>
 <br>
 </body>
 </html>
