@@ -44,7 +44,6 @@ public class MainController {
             ImageIO.write((RenderedImage) codeMap.get("codePic"), "jpeg", sos);
             sos.close();
         } catch (IOException e) {
-
             e.printStackTrace();
         }
     }
