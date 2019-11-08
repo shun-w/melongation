@@ -28,7 +28,7 @@ import java.net.URLEncoder;
 import java.util.List;
 
 
-@Controller()
+@Controller
 @RequestMapping("/user")
 public class UserController {
 

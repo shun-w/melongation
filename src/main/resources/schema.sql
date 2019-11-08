@@ -31,6 +31,7 @@ title varchar(1000),
 description varchar(2000),
 create_time datetime,
 submit_number int,
+is_checked tinyint,
 foreign key (user_id) references user(id)
 );
 

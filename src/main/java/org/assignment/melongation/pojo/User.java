@@ -1,5 +1,7 @@
 package org.assignment.melongation.pojo;
 
+import java.util.List;
+
 public class User {
     private Integer id;
     private String username;
@@ -7,6 +9,15 @@ public class User {
     private String image;
     private String email;
     private Boolean isActive;
+    private List<Paper> pageList;
+
+    public List<Paper> getPageList() {
+        return pageList;
+    }
+
+    public void setPageList(List<Paper> pageList) {
+        this.pageList = pageList;
+    }
 
     public User() {
     }
