@@ -1,6 +1,6 @@
 package org.assignment.melongation.mapper;
 
-import com.sun.deploy.panel.IProperty;
+
 import org.apache.ibatis.annotations.*;
 import org.assignment.melongation.pojo.Paper;
 
