@@ -40,6 +40,7 @@ create table `question`
 id int primary key auto_increment,
 paper_id int,
 type int,
+content varchar(2000),
 must_answer tinyint,
 order_number int,
 foreign key (paper_id) references paper(id)

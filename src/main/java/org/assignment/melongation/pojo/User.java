@@ -1,15 +1,31 @@
 package org.assignment.melongation.pojo;
 
+import org.hibernate.validator.constraints.EAN;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 public class User {
     private Integer id;
+    @Size(max = 10, min = 4)
     private String username;
+
+    @Size(max = 20, min = 6)
     private String password;
+    @NotEmpty
     private String image;
+    @Email
     private String email;
-    private Boolean isActive;
+    @NotEmpty
+    private boolean isActive;
+
     private List<Paper> pageList;
+
+    public User(Integer id) {
+        this.id = id;
+    }
 
     public List<Paper> getPageList() {
         return pageList;
@@ -31,11 +47,24 @@ public class User {
         this.isActive = isActive;
     }
 
-    public Boolean getActive() {
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", image='" + image + '\'' +
+                ", email='" + email + '\'' +
+                ", isActive=" + isActive +
+                ", pageList=" + pageList +
+                '}';
+    }
+
+    public boolean getIsActive() {
         return isActive;
     }
 
-    public void setActive(Boolean active) {
+    public void setIsActive(boolean active) {
         isActive = active;
     }
 

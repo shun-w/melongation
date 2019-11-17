@@ -14,7 +14,8 @@ import javax.servlet.ServletException;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
     @Autowired
-private UserInterceptor userInterceptor;
+    private UserInterceptor userInterceptor;
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(userInterceptor)

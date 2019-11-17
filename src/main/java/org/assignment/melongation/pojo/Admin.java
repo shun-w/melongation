@@ -1,11 +1,43 @@
 package org.assignment.melongation.pojo;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 public class Admin {
+
     private Integer id;
+
+    @Size(max = 10, min=4)
     private String username;
+
+    @Size(max = 20, min=6)
     private String password;
-    private String image;
+
+    @NotEmpty
+    private String image;//头像的url
+
+    @Email
     private String email;
+
+    @Override
+    public String toString() {
+        return "Admin{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", image='" + image + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
+
+    public Admin(Integer id, String username, String password, String image, String email) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.image = image;
+        this.email = email;
+    }
 
     public Integer getId() {
         return id;
