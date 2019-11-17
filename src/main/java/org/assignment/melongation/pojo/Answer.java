@@ -5,7 +5,7 @@ import javax.validation.constraints.NotEmpty;
 public class Answer {
     private Integer id;
     private Integer questionId;//属于哪位问题
-    @NotEmpty
+
     private String answer;//回答的内容
 
 

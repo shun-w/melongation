@@ -7,18 +7,58 @@ insert into `admin` values
 (1,'张三','12345678','','123@qq.com');
 
 
-insert into `paper`
-values (null, 1, 'cdsc','dew','2018-11-22 12:23:32',1,0);
-insert into `paper`
-values (null, 1, 'shusns','dew','2018-11-22 12:23:32',1,0);
+-- 初始化一张问卷
+-- 发布人：李四
+-- 标题：关于睡眠情况调查
+-- 描述：想当今大学生睡眠情况
+-- 创建时间：2018-11-22 12:23:32
+-- 提交数量:2
+-- 是否审核通过：是
+-- 问题：
+--
+-- 1.你现在几年级（单选，必填）
+-- A 大一
+-- B 大二
+-- C 大三
+-- D 大四
+--
+-- 2.睡前喜欢做什么（多选）
+-- A 玩手机
+-- B 玩电脑
+-- C 看书
+--
+-- 3.你对当今大学生睡眠问题有什么看法（文本，可选）
 
+-- 问卷填写
+-- 1. A  AB  没有看法
+-- 2. C  AC  应该好好睡觉
+
+
+-- 插入问卷
+insert into `paper`
+values (1, 1, '关于睡眠情况调查','想当今大学生睡眠情况','2018-11-22 12:23:32',2,1);
+
+-- 插入问卷内容
 insert into question
-values (null, 1, 1, "cxdscsd",1,1 );
+values (1, 1, 1, '{"你现在几年级":[{"A":"大一"},{"B":"大二"},{"C":"大三"},{"C":"大四"}]}',1,1 );
 insert into question
-values (null, 1, 1, "cxdscsd",1,1 );
+values (2, 1, 2, '{"睡前喜欢做什么":[{"A":"玩手机"},{"B":"玩电脑"},{"C":"学习"}]}',1,2 );
+insert into question
+values (3, 1, 3, '你对当今大学生睡眠问题有什么看法',0,3 );
+
+
+-- 插入问卷填写
+insert into answer
+values (null,1,'A');
+insert into answer
+values (null,2,'AB');
+insert into answer
+values (null,3,'没有看法');
 
 insert into answer
-values (null,1,"cnsvkj");
+values (null,1,'C');
 insert into answer
-values (null,1,"hello");
+values (null,2,'AC');
+insert into answer
+values (null,3,'应该好好睡觉');
 
