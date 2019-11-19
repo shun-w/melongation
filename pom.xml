@@ -71,6 +71,19 @@
             <artifactId>jstl</artifactId>
         </dependency>
 
+<!--        <dependency>-->
+<!--            <groupId>net.bytebuddy</groupId>-->
+<!--            <artifactId>byte-buddy-agent</artifactId>-->
+<!--            <version>1.4.32</version>-->
+<!--        </dependency>-->
+
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/net.bytebuddy/byte-buddy &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>net.bytebuddy</groupId>-->
+<!--            <artifactId>byte-buddy</artifactId>-->
+<!--            <version>1.8.12</version>-->
+<!--        </dependency>-->
+
     </dependencies>
 
     <build>
