@@ -30,6 +30,7 @@ public interface UserMapper {
 
     /**
      * 根据id删除一个user
+     *
      * @param id
      */
     @Update("delete from `user` where id=#{id}")
@@ -37,20 +38,20 @@ public interface UserMapper {
 
     /**
      * 保存一个User
+     *
      * @return
      */
     @Insert("insert into user values (null, #{username}, #{password}, #{image}, #{email}, #{isActive})")
-    @Options(keyColumn = "id",keyProperty = "id", useGeneratedKeys = true)
+    @Options(keyColumn = "id", keyProperty = "id", useGeneratedKeys = true)
     public Integer saveUser(User user);
 
     /**
      * 更新User
+     *
      * @param user
      */
     @Update("update `user` set username=#{username}, password=#{password}, image=#{image}, email=#{email}, is_active=#{isActive} where id = #{id}")
     public void updateUser(User user);
-
-
 
 
     /**
@@ -65,24 +66,35 @@ public interface UserMapper {
 
     /**
      * 查询所有的User，并查询出关联的Paper
+     *
      * @return
      */
     @Results(
             @Result(property = "pageList", column = "id",
-                    many=@Many(select="org.assignment.melongation.mapper.PaperMapper.selectPageByUserId"))
+                    many = @Many(select = "org.assignment.melongation.mapper.PaperMapper.selectPageByUserId"))
     )
     @Select("select * from `user`")
     public List<User> findAllUser();
 
     /**
      * 根据id查询User，并查询出关联的Paper
+     *
      * @param id
      * @return
      */
     @Results(
             @Result(property = "pageList", column = "id",
-                    many=@Many(select="org.assignment.melongation.mapper.PaperMapper.selectPageByUserId"))
+                    many = @Many(select = "org.assignment.melongation.mapper.PaperMapper.selectPageByUserId"))
     )
     @Select("select * from `user` where id = #{id}")
     public User findUserById(@Param("id") Integer id);
+
+
+    /**
+     * 根据username查找用户
+     * @param username
+     * @return
+     */
+    @Select("select * from `user` where username=#{username}")
+    User selectUserByUsername(@Param("username") String username);
 }

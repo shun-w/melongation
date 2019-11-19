@@ -1,29 +1,32 @@
 package org.assignment.melongation.controller;
 
 
-
-
-
+import org.assignment.melongation.pojo.Paper;
+import org.assignment.melongation.pojo.Question;
 import org.assignment.melongation.pojo.User;
+import org.assignment.melongation.service.PaperService;
+import org.assignment.melongation.service.QuestionService;
 import org.assignment.melongation.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.*;
 
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.Date;
 import java.util.List;
 
 
@@ -33,7 +36,17 @@ public class UserController {
 
     @Autowired
     UserServiceImpl userService;
+    @Autowired
+    PaperService paperService;
 
+    @Autowired
+    QuestionService questionService;
+
+    /**
+     * 获取用户登录界面
+     *
+     * @return
+     */
     @GetMapping("/login")
     public String getLoginForm() {
         return "user/login";
@@ -57,8 +70,8 @@ public class UserController {
             User user = userService.login(username, password);
             if (user != null && user.getUsername() != null) {
                 String username1 = URLEncoder.encode(username, "utf-8");
-                Cookie cookie= new Cookie("username", username1);
-                cookie.setMaxAge(60*60*3);
+                Cookie cookie = new Cookie("username", username1);
+                cookie.setMaxAge(60 * 60 * 3);
                 resp.addCookie(cookie);
                 return "redirect:/user";
             } else {
@@ -73,12 +86,12 @@ public class UserController {
     }
 
     @GetMapping()
-    public String main(){
+    public String main() {
         return "user/main";
     }
 
     @GetMapping("/logout")
-    public String logout(HttpServletRequest request, HttpServletResponse response){
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
         Cookie[] cookies = request.getCookies();
         for (int i = 0; i < cookies.length; i++) {
             if (cookies[i].getName().equals("username")) {
@@ -90,4 +103,65 @@ public class UserController {
         return "redirect:/user/login";
     }
 
+
+    /**
+     * 获取添加问卷界面
+     *
+     * @return
+     */
+    @GetMapping("/addPaper")
+    public String getAddPaper() {
+        return "user/addPaper";
+    }
+
+    /**
+     * 添加一张问卷
+     *
+     * @param paper
+     * @param model
+     * @param request
+     * @return
+     * @throws UnsupportedEncodingException
+     */
+    @PostMapping("/addPaper")
+    public String postAddPaper(Paper paper, Model model, HttpServletRequest request) throws UnsupportedEncodingException {
+        if (StringUtils.isEmpty(paper.getTitle()) || StringUtils.isEmpty(paper.getDescription())) {
+            model.addAttribute("msg", "标题或者描述不能为空");
+            return "user/addPaper";
+        } else {
+            String username = "";
+            Cookie[] cookies = request.getCookies();
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("username")) {
+                    username = URLDecoder.decode(cookie.getValue(), "utf-8");
+                }
+            }
+
+            User user = userService.selectUserByUsername(username);
+
+            paper.setCreateTime(new Date());
+            paper.setSubmitNumber(0);
+            paper.setUserId(user.getId());
+            paperService.addPaper(paper);
+//            System.out.println("问卷:"+paper.toString());
+            System.out.println("问卷Id：" + paper.getId());
+            model.addAttribute("paperId", paper.getId());
+            return "user/addQuestion";
+        }
+    }
+
+
+    /**
+     * 提交问卷的问题
+     * @param questions
+     * @return
+     */
+    @PostMapping("/addQuestion")
+    @ResponseBody
+    public ResponseEntity<Void> addQuestion(@RequestBody List<Question> questions) {
+        questionService.saveQuestions(questions);
+        for (Question question : questions)
+            System.out.println(question.toString());
+        return ResponseEntity.ok().build();
+    }
 }

@@ -16,5 +16,9 @@
 
 欢迎您，${username}
 <a href="/user/logout">注销</a>
+<br>
+<a href="/user/addPaper">发布新问卷</a>
+
+<br>
 </body>
 </html>

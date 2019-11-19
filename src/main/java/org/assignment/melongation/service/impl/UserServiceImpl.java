@@ -2,6 +2,7 @@ package org.assignment.melongation.service.impl;
 
 
 import org.assignment.melongation.mapper.UserMapper;
+import org.assignment.melongation.pojo.Question;
 import org.assignment.melongation.pojo.User;
 import org.assignment.melongation.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,4 +27,12 @@ public class UserServiceImpl implements UserService {
     public User login(String username, String password) {
         return userMapper.selectUserByNameAndPassword(username, password);
     }
+
+    @Override
+    public User selectUserByUsername(String username) {
+        return userMapper.selectUserByUsername(username);
+    }
+
+
+
 }

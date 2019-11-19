@@ -1,6 +1,5 @@
 package org.assignment.melongation.pojo;
 
-import org.omg.CORBA.INTERNAL;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Past;

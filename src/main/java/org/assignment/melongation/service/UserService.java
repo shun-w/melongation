@@ -1,5 +1,6 @@
 package org.assignment.melongation.service;
 
+import org.assignment.melongation.pojo.Question;
 import org.assignment.melongation.pojo.User;
 
 import java.util.List;
@@ -21,4 +22,8 @@ public interface UserService {
      * @return
      */
     public User login(String username, String password);
+
+    User selectUserByUsername(String username);
+
+
 }
