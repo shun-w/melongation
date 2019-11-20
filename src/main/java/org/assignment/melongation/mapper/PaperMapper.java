@@ -3,9 +3,10 @@ package org.assignment.melongation.mapper;
 
 import org.apache.ibatis.annotations.*;
 import org.assignment.melongation.pojo.Paper;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+@Repository
 public interface PaperMapper {
 
     /**

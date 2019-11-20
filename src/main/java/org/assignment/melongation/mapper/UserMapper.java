@@ -2,13 +2,14 @@ package org.assignment.melongation.mapper;
 
 import org.apache.ibatis.annotations.*;
 import org.assignment.melongation.pojo.User;
-
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
  * User持久层代码
  */
+@Repository
 public interface UserMapper {
 
     /**

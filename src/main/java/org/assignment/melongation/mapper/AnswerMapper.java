@@ -2,9 +2,10 @@ package org.assignment.melongation.mapper;
 
 import org.apache.ibatis.annotations.*;
 import org.assignment.melongation.pojo.Answer;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+@Repository
 public interface AnswerMapper {
     /**
      * 根据Id查询一个Answer，不包含关联属性

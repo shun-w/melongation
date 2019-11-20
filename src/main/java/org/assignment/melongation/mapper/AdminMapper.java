@@ -2,12 +2,14 @@ package org.assignment.melongation.mapper;
 
 import org.apache.ibatis.annotations.*;
 import org.assignment.melongation.pojo.Admin;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
  * Admin持久层代码
  */
+@Repository
 public interface AdminMapper {
     /**
      * 根据id查询Admin
