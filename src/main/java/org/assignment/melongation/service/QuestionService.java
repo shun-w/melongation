@@ -10,4 +10,9 @@ public interface QuestionService {
      * @param questions
      */
     void saveQuestions(List<Question> questions);
+
+    List<Question> findQuestionByPaperId(int id);
+
+
 }
+

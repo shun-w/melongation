@@ -9,9 +9,6 @@ public interface AdminService {
 
 
 
-    List<Paper> findAllPaper ();
-
-
 
 
 }

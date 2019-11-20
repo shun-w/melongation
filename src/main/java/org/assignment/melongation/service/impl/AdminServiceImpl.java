@@ -12,20 +12,5 @@ import java.util.List;
 @Service
 @Transactional
 public class AdminServiceImpl implements AdminService {
-    @Autowired
-    PaperMapper paperMapper;
 
-
-
-
-
-
-    @Override
-    public List<Paper> findAllPaper() {
-
-
-        return   paperMapper.selectAllPaper();
-
-
-    }
 }

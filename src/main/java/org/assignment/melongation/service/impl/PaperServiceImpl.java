@@ -20,4 +20,19 @@ public class PaperServiceImpl implements PaperService {
         paperMapper.savePaper(paper);
     }
 
+
+        @Override
+        public List<Paper> findAllPaper() {
+
+
+            return   paperMapper.selectAllPaper();
+
+
+        }
+
+
+    @Override
+    public Paper findPaperById(int id) {
+        return paperMapper.findPaperById(id);
+    }
 }

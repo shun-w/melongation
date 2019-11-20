@@ -6,7 +6,12 @@ import org.assignment.melongation.pojo.Question;
 import java.util.List;
 
 public interface PaperService {
+
+
     void addPaper(Paper paper);
 
 
+    List<Paper> findAllPaper ();
+
+    Paper findPaperById(int id);
 }
