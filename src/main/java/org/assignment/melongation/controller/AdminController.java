@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
@@ -25,6 +26,12 @@ public class AdminController {
 
 
     //    @ResponseBody
+
+    /**
+     * 返回paper的列表
+     * @param model
+     * @return
+     */
     @GetMapping("/getAllPaper")
     public String getAllPaper(Model model) {
 
@@ -36,12 +43,12 @@ public class AdminController {
     }
 
     /**
-     * 查看某个问卷的页面
+     * 查看某个问卷的页面, 以及附带其所有的问题
      * @param model
      * @return
      */
     @GetMapping("/getOnePaperAndQuestion")
-    public String getOnePaperAndQuestion(Model model, int id) {
+    public String getOnePaperAndQuestion(Model model, @RequestParam int id) {
 
 
         Paper paper =  paperService.findPaperById(id);
@@ -51,13 +58,21 @@ public class AdminController {
         model.addAttribute("questions", Questions);
 
 
-
         return "onePaper.jsp";
     }
 
+    /**
+     * 审核通过按钮
+     * @param model
+     * @param id
+     * @return
+     */
+    @GetMapping("/checkPaper")
+    public String checkPaper(Model model, int id) {
 
-
-
+        paperService.checkPaper(id);
+        return "redirect:papers.jsp";   //审核通过，重定向刷新一下
+    }
 
 
 

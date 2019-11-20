@@ -3,6 +3,7 @@ package org.assignment.melongation.mapper;
 
 import org.apache.ibatis.annotations.*;
 import org.assignment.melongation.pojo.Paper;
+import org.assignment.melongation.pojo.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -45,6 +46,16 @@ public interface PaperMapper {
     public void deletePaperById(@Param("id") Integer id);
 
 
+
+    /**
+     * 根据id check通过一个paper
+     *
+     * @param id
+     */
+    @Update("update  paper set is_checked = 1 where id=#{id}")
+    public void checkPaperById(@Param("id") Integer id);
+
+
     /**
      * 根据用户id查询paper
      *
@@ -73,19 +84,20 @@ public interface PaperMapper {
     public List<Paper> findAllPaper();
 
     /**
-     * 根据Id查询Paper，并查询出关联的user， question
+     * 根据paper的Id查询Paper，并查询出关联的user， questions  __(have bug)
      * @param id
      * @return
      */
-    @Results({
-            @Result(property = "user", column = "user_id",
-                    one = @One(select = "org.assignment.melongation.UserMapper.selectUserById")
-            ),
-            @Result(property = "questionList", column = "id",
-                    many = @Many(select = "org.assignment.melongation.mapper.QuestionMapper.selectQuestionByPaperId"))
+//    @Results({
+//            @Result(property = "user", column = "user_id", javaType= User.class,
+//                    one = @One(select = "org.assignment.melongation.UserMapper.selectUserById")
+//            ),
+//            @Result(property = "questionList", column = "id",
+//                    many = @Many(select = "org.assignment.melongation.mapper.QuestionMapper.selectQuestionByPaperId"))
+//
+//    }
+//    )
 
-    }
-    )
     @Select("select * from paper where id=#{id}")
     public Paper findPaperById(@Param("id")Integer id);
 

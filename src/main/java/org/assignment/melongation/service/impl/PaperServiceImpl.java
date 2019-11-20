@@ -35,4 +35,10 @@ public class PaperServiceImpl implements PaperService {
     public Paper findPaperById(int id) {
         return paperMapper.findPaperById(id);
     }
+
+    @Override
+    public void checkPaper(int id ) {
+
+        paperMapper.checkPaperById(id);
+    }
 }

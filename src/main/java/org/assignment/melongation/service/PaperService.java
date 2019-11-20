@@ -14,4 +14,6 @@ public interface PaperService {
     List<Paper> findAllPaper ();
 
     Paper findPaperById(int id);
+
+   void checkPaper(int id);
 }
