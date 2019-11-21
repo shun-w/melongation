@@ -88,15 +88,15 @@ public interface PaperMapper {
      * @param id
      * @return
      */
-//    @Results({
-//            @Result(property = "user", column = "user_id", javaType= User.class,
-//                    one = @One(select = "org.assignment.melongation.UserMapper.selectUserById")
-//            ),
-//            @Result(property = "questionList", column = "id",
-//                    many = @Many(select = "org.assignment.melongation.mapper.QuestionMapper.selectQuestionByPaperId"))
-//
-//    }
-//    )
+    @Results({
+            @Result(property = "user", column = "user_id", javaType= User.class,
+                    one = @One(select = "org.assignment.melongation.mapper.UserMapper.selectUserById")
+            ),
+            @Result(property = "questionList", column = "id",
+                    many = @Many(select = "org.assignment.melongation.mapper.QuestionMapper.selectQuestionByPaperId"))
+
+    }
+    )
 
     @Select("select * from paper where id=#{id}")
     public Paper findPaperById(@Param("id")Integer id);
