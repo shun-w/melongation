@@ -19,6 +19,8 @@
 <body>
 <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js">
 </script>
+<a href="<c:url value="/admin/getAllPaper?pageNo=1" />" >返回问卷列表</a>
+
 <h1>问卷信息</h1>
     <h4>问卷编号： <c:out value="${paper.id}" /><br/> </h4>
     <h4>问卷标题： <c:out value="${paper.title}" /><br/></h4>
