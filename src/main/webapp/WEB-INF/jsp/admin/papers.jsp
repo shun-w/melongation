@@ -32,15 +32,27 @@
             <th>是否审核</th>
 
             <th>创建时间</th>
+
+            <th>查看问卷</th>
         </tr>
         <c:forEach items="${papers.list}" var="paper">
             <tr>
                 <td>${paper.id}</td>
                 <td>${paper.title}</td>
                 <td>${paper.description}</td>
-                <td>${paper.isChecked}</td>
+                <td>
+                <c:if test="${paper.isChecked == true}">
+                    已审核
+                </c:if>
+                <c:if test="${paper.isChecked== false}">
+                    未审核
+                </c:if>
+                </td>
                 <td><fmt:formatDate value="${paper.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 
+                <td>
+                    <a href="<c:url value="/admin/getOnePaperAndQuestion?id=${paper.id}" />" >点击查看</a>
+                </td>
             </tr>
 
         </c:forEach>

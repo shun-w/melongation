@@ -53,10 +53,10 @@ public class AdminController {
         Paper paper =  paperService.findPaperById(id);
         model.addAttribute("paper", paper);
 
-        List<Question> Questions =  questionService.findQuestionByPaperId(id);
-        model.addAttribute("questions", Questions);
+        //List<Question> Questions =  questionService.findQuestionByPaperId(id);
+       // model.addAttribute("questions", Questions);
 
-        return "onePaper.jsp";
+        return "/admin/paper";
     }
 
     /**
@@ -69,7 +69,7 @@ public class AdminController {
     public String checkPaper(Model model, int id) {
 
         paperService.checkPaper(id);
-        return "redirect:papers.jsp";   //审核通过，重定向刷新一下
+        return "redirect:/admin/papers";   //审核通过，重定向刷新一下
     }
 
 
