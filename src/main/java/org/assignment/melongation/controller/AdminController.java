@@ -67,11 +67,10 @@ public class AdminController {
      */
     @GetMapping("/checkPaper")
     public String checkPaper(Model model, int id) {
-
+        int pageNo = 1;
         paperService.checkPaper(id);
-        return "redirect:/admin/papers";   //审核通过，重定向刷新一下
+        return "redirect:/admin/getAllPaper?pageNo="+Integer.toString(pageNo);   //审核通过，重定向刷新一下
     }
-
 
 
 

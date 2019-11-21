@@ -11,11 +11,14 @@
 <%@ page session="true" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
+
 <html>
 <head>
     <title>问卷</title>
 </head>
 <body>
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js">
+</script>
 <h1>问卷信息</h1>
     <h4>问卷编号： <c:out value="${paper.id}" /><br/> </h4>
     <h4>问卷标题： <c:out value="${paper.title}" /><br/></h4>
@@ -45,8 +48,13 @@
                    问答题
                 </c:if>
             </td>
-            <td>${question.content}</td>
 
+<%--            todo--%>
+<%--            <script>  var jsonData = ${question.content};--%>
+<%--            var data = $.parseJSON(jsonData);--%>
+<%--            </script>--%>
+
+            <td>${question.content}</td>
         </tr>
 
     </c:forEach>
