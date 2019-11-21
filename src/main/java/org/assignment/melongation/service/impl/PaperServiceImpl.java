@@ -1,5 +1,7 @@
 package org.assignment.melongation.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.assignment.melongation.mapper.PaperMapper;
 import org.assignment.melongation.pojo.Paper;
 import org.assignment.melongation.pojo.Question;
@@ -20,14 +22,23 @@ public class PaperServiceImpl implements PaperService {
         paperMapper.savePaper(paper);
     }
 
-
+    /**
+     * 进行分页
+     * @param currentPage
+     *  5页指定
+     * @return
+     */
         @Override
-        public List<Paper> findAllPaper() {
+        public PageInfo<Paper> findAllPaper(int currentPage) {
 
+            int pageSize  = 5;
+            PageHelper.startPage(currentPage, pageSize);
 
-            return   paperMapper.selectAllPaper();
+            List<Paper> papers   = paperMapper.findAllPaper();
 
+            PageInfo<Paper> pageInfo = new PageInfo<>(papers);
 
+            return pageInfo;
         }
 
 

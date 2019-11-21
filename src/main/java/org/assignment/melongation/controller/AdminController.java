@@ -1,6 +1,7 @@
 package org.assignment.melongation.controller;
 
 
+import com.github.pagehelper.PageInfo;
 import org.assignment.melongation.pojo.Paper;
 import org.assignment.melongation.pojo.Question;
 import org.assignment.melongation.service.PaperService;
@@ -33,13 +34,12 @@ public class AdminController {
      * @return
      */
     @GetMapping("/getAllPaper")
-    public String getAllPaper(Model model) {
+    public String getAllPaper(Model model, int pageNo) {
 
 
-        List<Paper> papers =  paperService.findAllPaper();
+        PageInfo<Paper> papers =  paperService.findAllPaper(pageNo);
         model.addAttribute("papers", papers);
-
-        return "papers.jsp";
+        return "/admin/papers";
     }
 
     /**
@@ -50,13 +50,11 @@ public class AdminController {
     @GetMapping("/getOnePaperAndQuestion")
     public String getOnePaperAndQuestion(Model model, @RequestParam int id) {
 
-
         Paper paper =  paperService.findPaperById(id);
         model.addAttribute("paper", paper);
 
         List<Question> Questions =  questionService.findQuestionByPaperId(id);
         model.addAttribute("questions", Questions);
-
 
         return "onePaper.jsp";
     }
