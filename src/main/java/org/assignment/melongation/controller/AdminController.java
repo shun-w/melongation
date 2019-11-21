@@ -25,11 +25,16 @@ public class AdminController {
     @Autowired
     QuestionService questionService;
 
+    @GetMapping("/")
+    public String getMain() {
+        return "/admin/main";
+    }
 
     //    @ResponseBody
 
     /**
      * 返回paper的列表
+     *
      * @param model
      * @return
      */
@@ -37,30 +42,32 @@ public class AdminController {
     public String getAllPaper(Model model, int pageNo) {
 
 
-        PageInfo<Paper> papers =  paperService.findAllPaper(pageNo);
+        PageInfo<Paper> papers = paperService.findAllPaper(pageNo);
         model.addAttribute("papers", papers);
         return "/admin/papers";
     }
 
     /**
      * 查看某个问卷的页面, 以及附带其所有的问题
+     *
      * @param model
      * @return
      */
     @GetMapping("/getOnePaperAndQuestion")
     public String getOnePaperAndQuestion(Model model, @RequestParam int id) {
 
-        Paper paper =  paperService.findPaperById(id);
+        Paper paper = paperService.findPaperById(id);
         model.addAttribute("paper", paper);
 
         //List<Question> Questions =  questionService.findQuestionByPaperId(id);
-       // model.addAttribute("questions", Questions);
+        // model.addAttribute("questions", Questions);
 
         return "/admin/paper";
     }
 
     /**
      * 审核通过按钮
+     *
      * @param model
      * @param id
      * @return
@@ -69,9 +76,8 @@ public class AdminController {
     public String checkPaper(Model model, int id) {
         int pageNo = 1;
         paperService.checkPaper(id);
-        return "redirect:/admin/getAllPaper?pageNo="+Integer.toString(pageNo);   //审核通过，重定向刷新一下
+        return "redirect:/admin/getAllPaper?pageNo=" + Integer.toString(pageNo);   //审核通过，重定向刷新一下
     }
-
 
 
 }
