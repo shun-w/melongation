@@ -28,12 +28,12 @@
                     var obj = JSON.parse(elements[index].innerHTML);
                     var content = "";
                     for (var i in obj) {
-                        content = content + i + "  ";
+                        content = content + i + " <br>";
 
                         for (var j = 0; j < obj[i].length; j++) {
 
                             for (var k in obj[i][j]) {
-                                content = content + "   " + k + ". " + obj[i][j][k] + "  ";
+                                content = content + "<br>" + k + ". " + obj[i][j][k] + "<br>";
                             }
                         }
 
