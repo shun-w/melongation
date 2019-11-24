@@ -35,11 +35,24 @@ public interface UserService {
      */
     int register(String username, String password, String email);
 
-
+    /**
+     * 更新用户
+     * @param user
+     * @return
+     */
     int update(User user);
 
+    /**
+     *
+     * @param username
+     * @return
+     */
     User selectUserByUsername(String username);
 
-
+    /**
+     *
+     * @param keyWord
+     * @return
+     */
     List<User> serchUsers(String keyWord);
 }

@@ -13,6 +13,9 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
+/**
+ * 验证码
+ */
 public class CodeUtil {
     private static int width = 90;// 定义图片的width
     private static int height = 20;// 定义图片的height

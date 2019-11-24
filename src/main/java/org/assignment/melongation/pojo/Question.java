@@ -9,6 +9,9 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.List;
 
+/**
+ * Question
+ */
 public class Question {
     private Integer id;
     private Integer paperId;

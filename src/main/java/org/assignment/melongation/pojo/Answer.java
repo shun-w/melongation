@@ -2,6 +2,9 @@ package org.assignment.melongation.pojo;
 
 import javax.validation.constraints.NotEmpty;
 
+/**
+ * answer
+ */
 public class Answer {
     private Integer id;
     private Integer questionId;//属于哪位问题

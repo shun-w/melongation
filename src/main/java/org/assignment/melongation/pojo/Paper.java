@@ -6,6 +6,9 @@ import javax.validation.constraints.Past;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Paper
+ */
 public class Paper {
     private Integer id;
     private Integer userId;//外键

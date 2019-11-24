@@ -1,5 +1,8 @@
 package org.assignment.melongation.pojo;
 
+/**
+ * AnswerDistribution
+ */
 public class AnswerDistribution {
     private Integer num;//数量
 
