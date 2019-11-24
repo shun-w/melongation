@@ -52,8 +52,6 @@ public class AdminController {
      */
     @GetMapping("/getAllPaper")
     public String getAllPaper(Model model, int pageNo) {
-
-
         PageInfo<Paper> papers = paperService.findAllPaper(pageNo);
         model.addAttribute("papers", papers);
         return "/admin/papers";

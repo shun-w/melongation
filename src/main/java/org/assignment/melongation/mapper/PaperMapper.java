@@ -33,7 +33,7 @@ public interface PaperMapper {
      * @param paper
      * @return
      */
-    @Insert("insert into `paper` values (null, #{userId}, #{title},  #{description}, #{createTime}, #{submitNumber}, #{isChecked})")
+    @Insert("insert into `paper` values (null, #{userId}, #{title},  #{description}, #{createTime}, #{submitNumber}, #{isChecked)")
     @Options(keyProperty = "id", keyColumn = "id", useGeneratedKeys = true)
     public Integer savePaper(Paper paper);
 
@@ -83,6 +83,10 @@ public interface PaperMapper {
     @Select("select * from paper")
     public List<Paper> findAllPaper();
 
+
+    @Select("select * from paper where id=(select id from user where username = #{username})")
+    public List<Paper> findUserPaper(@Param("username")String username);
+
     /**
      * 根据paper的Id查询Paper，并查询出关联的user， questions  __(have bug)
      * @param id
@@ -97,8 +101,9 @@ public interface PaperMapper {
 
     }
     )
-
     @Select("select * from paper where id=#{id}")
     public Paper findPaperById(@Param("id")Integer id);
+
+
 
 }

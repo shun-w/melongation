@@ -43,6 +43,18 @@ public class PaperServiceImpl implements PaperService {
         return pageInfo;
     }
 
+        @Override
+        public PageInfo<Paper> findUserPaper(int currentPage,String username){
+            int pageSize = 5;
+            PageHelper.startPage(currentPage,pageSize);
+
+            List<Paper> papers = paperMapper.findUserPaper(username);
+
+            PageInfo<Paper> pgInfo = new PageInfo<>(papers);
+
+            return pgInfo;
+        }
+
 
     @Override
     public Paper findPaperById(int id) {
@@ -64,5 +76,19 @@ public class PaperServiceImpl implements PaperService {
             throw new MelongationException("该问卷不存在");
         }
         return paper;
+    }
+
+    /**
+     * 根据用户id查询问卷，并进行分页
+     * @param pageNo 当前页面的页号
+     * @return
+     */
+    @Override
+    public PageInfo<Paper> findAllPaperByUser(int pageNo,int id) {
+        int pageSize = 5;
+        PageHelper.startPage(pageNo, pageSize);
+        List<Paper> papers = paperMapper.selectPageByUserId(id);
+        PageInfo<Paper> pageInfo = new PageInfo<>(papers);
+        return pageInfo;
     }
 }

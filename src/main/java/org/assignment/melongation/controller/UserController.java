@@ -1,21 +1,25 @@
 package org.assignment.melongation.controller;
 
+import com.github.pagehelper.PageInfo;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
+import org.assignment.melongation.mapper.AnswerMapper;
+import org.assignment.melongation.pojo.*;
+
 import org.assignment.melongation.pojo.Paper;
 import org.assignment.melongation.pojo.Question;
 import org.assignment.melongation.pojo.User;
+
 import org.assignment.melongation.service.PaperService;
 import org.assignment.melongation.service.QuestionService;
 import org.assignment.melongation.service.UserService;
-import org.assignment.melongation.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
 import org.springframework.util.StringUtils;
-import org.springframework.validation.Errors;
+
 import org.springframework.web.bind.annotation.*;
 
 
@@ -23,7 +27,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
+
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -40,6 +44,9 @@ public class UserController {
     UserService userService;
     @Autowired
     PaperService paperService;
+
+    @Autowired
+    AnswerMapper answerMapper;
 
     @Autowired
     QuestionService questionService;
@@ -76,6 +83,7 @@ public class UserController {
                 Cookie cookie = new Cookie("username", username1);
                 cookie.setMaxAge(60 * 60 * 3);
                 resp.addCookie(cookie);
+                session.setAttribute("user",user);
                 return "redirect:/user";
             } else {
                 model.addAttribute("msg", "用户名或密码错误,请重新登录");
@@ -99,7 +107,7 @@ public class UserController {
 
 
     @GetMapping("/logout")
-    public String logout(HttpServletRequest request, HttpServletResponse response) {
+    public String logout(HttpServletRequest request, HttpServletResponse response,HttpSession session) {
         Cookie[] cookies = request.getCookies();
         for (int i = 0; i < cookies.length; i++) {
             if (cookies[i].getName().equals("username")) {
@@ -108,6 +116,7 @@ public class UserController {
                 response.addCookie(cookies[i]);
             }
         }
+        session.removeAttribute("user");
         return "redirect:/user/login";
     }
 
@@ -222,7 +231,6 @@ public class UserController {
         }
     }
 
-
     /**
      * 提交问卷的问题
      * @param questions
@@ -236,4 +244,93 @@ public class UserController {
             System.out.println(question.toString());
         return ResponseEntity.ok().build();
     }
+
+    /**
+     * 返回paper的列表
+     *
+     * @param model
+     * @return
+     */
+    @GetMapping("/getUserPaper")
+    public String getUserPaper(Model model, Integer pageNo,HttpServletRequest request) throws UnsupportedEncodingException {
+        if (pageNo==null) pageNo = new Integer(1);
+        String username = null;
+        Cookie[] cookies = request.getCookies();
+        for(Cookie c:cookies){
+            if(c.getName().equals("username")) username = URLDecoder.decode(c.getValue(), "utf-8");
+        }
+        if(username==null) return "user/login";
+        PageInfo<Paper> papers = paperService.findUserPaper(pageNo,username);
+        model.addAttribute("papers", papers);
+        return "/user/papers";}
+
+
+//    /**
+//     * 跳转到我的问卷
+//     * @return
+//     */
+//    @GetMapping("/myPapers")
+//    public String myPaper(Model model,@RequestParam int pageNo,HttpSession session){
+//        User user= (User) session.getAttribute("user");
+//        int id=user.getId();
+//        PageInfo<Paper> papers = paperService.findAllPaperByUser(pageNo,id);
+//        model.addAttribute("papers", papers);
+//        return "user/myPapers";
+//
+//    }
+
+    /**
+     * 查看某个问卷的页面, 以及附带其所有的问题
+     *
+     * @param model
+     * @return
+     */
+
+    @GetMapping("/getOnePaperAndQuestion")
+    public String getOnePaperAndQuestion(Model model, @RequestParam int id) {
+        Paper paper = paperService.findPaperById(id);
+        model.addAttribute("paper", paper);
+        return "/user/paper";
+    }
+
+    @GetMapping("/selectDetail")
+    public String SelectDetail(Model model,@RequestParam(value = "tid") String tid, @RequestParam(value = "tTitle") String tTitle){
+        //务必在get请求发起之前替换字符串，将{替换为%7b,将}替换为%7d,否则请求会报错
+        String details="";
+        String allSelections="";
+        List<AnswerDistribution> answerDistributionList= answerMapper.findAnswerByIdGrouped(Integer.parseInt(tid));
+        for (AnswerDistribution answerDistribution : answerDistributionList) {
+           details+= answerDistribution.toString();
+           allSelections += answerDistribution.getJsonAnswer();
+        }
+        //务必在get请求发起之前替换字符串，将{替换为%7b,将}替换为%7d,否则请求会报错
+        model.addAttribute("tid",tid);
+        model.addAttribute("tTitle",tTitle);
+        model.addAttribute("details",details);
+        model.addAttribute("allSelections",allSelections);
+
+        return "user/selectDetail";
+    }
+
+    @GetMapping("/paperAnalyze")
+    public String PaperAnalyze(Model model,@RequestParam(value = "tid") String tid,@RequestParam(value = "tTitle") String tTitle){
+        List<AnswerDistribution> answerDistributionList = answerMapper.findAnswerByIdGrouped(Integer.parseInt(tid));
+        for(AnswerDistribution answerDistribution:answerDistributionList){
+            System.out.println(answerDistribution.getAnswer());
+        }
+
+        model.addAttribute("tid",tid);
+        model.addAttribute("tTitle",tTitle);
+        model.addAttribute("answerList",answerDistributionList);
+        return "user/paperAnalyze";
+    }
+
+
+//    @GetMapping("/myOnePaper")
+//    public String getOnePaperAndQuestion(Model model, @RequestParam int id) {
+//        Paper paper = paperService.findPaperById(id);
+//        model.addAttribute("paper", paper);
+//        return "/user/myOnePaper";
+//    }
+
 }
