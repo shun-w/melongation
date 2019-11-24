@@ -20,7 +20,7 @@ public class AnswerServiceImpl implements AnswerService {
     QuestionMapper questionMapper;
 
     /**
-     * 返回单选题目的答题数据
+     * 返回题目的答题数据
      * @param questionId
      * @return
      */
