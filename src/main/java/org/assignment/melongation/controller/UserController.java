@@ -1,11 +1,13 @@
 package org.assignment.melongation.controller;
 
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.assignment.melongation.pojo.Paper;
 import org.assignment.melongation.pojo.Question;
 import org.assignment.melongation.pojo.User;
 import org.assignment.melongation.service.PaperService;
 import org.assignment.melongation.service.QuestionService;
+import org.assignment.melongation.service.UserService;
 import org.assignment.melongation.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +37,7 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    UserServiceImpl userService;
+    UserService userService;
     @Autowired
     PaperService paperService;
 
@@ -119,6 +121,70 @@ public class UserController {
     public String getAddPaper() {
         return "user/addPaper";
     }
+
+
+    /**
+     * 修改个人信息
+     *
+     * @return
+     */
+    @GetMapping("/update")
+    public String update(Model model, HttpServletRequest request,HttpServletResponse resp) {
+        Cookie[] cookies = request.getCookies();
+
+        for (int i = 0; i < cookies.length; i++) {
+            if (cookies[i].getName().equals("username")) {
+                String username =  cookies[i].getValue();
+                 User user =  userService.selectUserByUsername(username);
+                model.addAttribute("user",user);
+                int id = user.getId();
+
+                Cookie cookie = new Cookie("userid", Integer.toString(id));
+                cookie.setMaxAge(60 * 60 * 3);
+                resp.addCookie(cookie);
+
+            }
+        }
+
+        return "user/updateUser";
+    }
+
+
+    @PostMapping("/update")
+    public String updatePost(String username, String password, String email , Model model, HttpServletRequest request, HttpServletResponse response) {
+        Cookie[] cookies = request.getCookies();
+        int id = 0;
+        User user;
+        for (int i = 0; i < cookies.length; i++) {
+            if (cookies[i].getName().equals("userid")) {
+                String userid = cookies[i].getValue();
+                id = Integer.parseInt(userid);
+            }
+        }
+
+
+        user = new User(id, username, password, email);
+        int answ = userService.update(user);
+                if (answ == 1) {
+                    model.addAttribute("msg", "修改成功");
+                    for (int i = 0; i < cookies.length; i++) {  //更新cookies name的值
+                        if (cookies[i].getName().equals("username")) {
+                            cookies[i].setMaxAge(0);
+                        }
+                    }
+                    Cookie cookie = new Cookie("username", username);
+                    cookie.setMaxAge(60 * 60 * 3);
+                    response.addCookie(cookie);
+
+                    return "redirect:/user/update";
+                } else {
+                    model.addAttribute("msg", "修改个人信息失败,请重新修改个人信息");
+                    }
+                    return "redirect:/user/update";
+                }
+
+
+
 
     /**
      * 添加一张问卷

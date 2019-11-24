@@ -18,6 +18,8 @@
 <a href="/user/logout">注销</a>
 <br>
 <a href="/user/addPaper">发布新问卷</a>
+<br>
+<a href="/user/update">个人信息页面</a>
 
 <br>
 </body>

@@ -52,8 +52,8 @@ public interface UserMapper {
      *
      * @param user
      */
-    @Update("update `user` set username=#{username}, password=#{password}, image=#{image}, email=#{email}, is_active=#{isActive} where id = #{id}")
-    public void updateUser(User user);
+    @Update("update user set username=#{username}, password=#{password},  email=#{email} where id = #{id}")
+    public int updateUser(User user);
 
     /**
      * 注册
@@ -107,7 +107,7 @@ public interface UserMapper {
      * @param username
      * @return
      */
-    @Select("select * from `user` where username=#{username}")
+    @Select("select * from user where username=#{username}")
     User selectUserByUsername(@Param("username") String username);
 
     /**

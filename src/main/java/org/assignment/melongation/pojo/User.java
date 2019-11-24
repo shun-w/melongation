@@ -23,6 +23,13 @@ public class User {
 
     private List<Paper> pageList;
 
+    public User(Integer id, @Size(max = 10, min = 4) String username, @Size(max = 20, min = 6) String password, @Email String email) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+    }
+
     public User(Integer id) {
         this.id = id;
     }

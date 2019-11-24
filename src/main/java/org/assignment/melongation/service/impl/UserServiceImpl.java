@@ -35,6 +35,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public int  update(User user) {
+        if(userMapper.updateUser(user) > 0) return 1;
+       else return 0;
+    }
+
+    @Override
     public User selectUserByUsername(String username) {
         return userMapper.selectUserByUsername(username);
     }

@@ -32,7 +32,8 @@ public interface UserService {
      */
     int register(String username, String password, String  email);
 
-    User selectUserByUsername(String username);
 
+    int update(User user);
+    User selectUserByUsername(String username);
 
 }
