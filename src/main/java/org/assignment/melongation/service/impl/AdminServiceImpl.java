@@ -66,7 +66,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void uploadImage(Map map) {
-        adminMapper.uploadImage(map);
+//        adminMapper.uploadImage(map);
     }
 
     @Override

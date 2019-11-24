@@ -122,7 +122,7 @@ public class AdminController {
             System.out.println(admin.toString());
             if (admin!= null && admin.getUsername() != null) {
                 String username1 = URLEncoder.encode(username, "utf-8");
-                Cookie cookie = new Cookie("username", username1);
+                Cookie cookie = new Cookie("adminname", username1);
                 cookie.setMaxAge(60 * 60 * 3);
                 resp.addCookie(cookie);
                 session.setAttribute("admin",admin);
