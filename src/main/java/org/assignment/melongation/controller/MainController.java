@@ -4,6 +4,7 @@ import org.assignment.melongation.pojo.Answer;
 import org.assignment.melongation.pojo.Paper;
 import org.assignment.melongation.service.AnswerService;
 import org.assignment.melongation.service.PaperService;
+import org.assignment.melongation.service.UserService;
 import org.assignment.melongation.utils.CodeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.awt.image.RenderedImage;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 
@@ -55,6 +57,29 @@ public class MainController {
     public String main(Model model) {
         model.addAttribute("msg","hello melongation");
         return "index";
+    }
+    @Autowired
+    UserService userService;
+    //注册
+    @GetMapping("/register")
+    public String register() {
+        return "addUser";
+    }
+
+
+
+    @PostMapping("/register")
+    public String register(String username, String password, String email , Model model) throws UnsupportedEncodingException {
+
+        int answ = userService.register(username, password,email);
+        if (answ ==1) {
+            model.addAttribute("msg", "注册成功,请登录");
+
+            return "redirect:/user/login";
+        } else {
+            model.addAttribute("msg", "注册失败,请重新注册");
+            return "/register";
+        }
     }
 
 

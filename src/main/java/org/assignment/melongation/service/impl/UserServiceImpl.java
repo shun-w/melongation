@@ -29,6 +29,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public int  register(String username, String password, String  email) {
+         if(userMapper.register(username, password, email) > 0) return 1;
+         else return 0;
+    }
+
+    @Override
     public User selectUserByUsername(String username) {
         return userMapper.selectUserByUsername(username);
     }

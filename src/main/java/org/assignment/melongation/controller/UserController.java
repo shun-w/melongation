@@ -66,7 +66,8 @@ public class UserController {
         String sessionCode = session.getAttribute("code").toString();
         session.removeAttribute("code");
 
-        if (!StringUtils.isEmpty(checkCode) && !StringUtils.isEmpty(checkCode) && (checkCode.toLowerCase()).equals(sessionCode.toLowerCase())) {
+//        if (!StringUtils.isEmpty(checkCode) && !StringUtils.isEmpty(checkCode) && (checkCode.toLowerCase()).equals(sessionCode.toLowerCase())) {
+            if (true){  //test
             User user = userService.login(username, password);
             if (user != null && user.getUsername() != null) {
                 String username1 = URLEncoder.encode(username, "utf-8");
@@ -89,6 +90,11 @@ public class UserController {
     public String main() {
         return "user/main";
     }
+
+
+
+
+
 
     @GetMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) {

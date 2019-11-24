@@ -23,6 +23,15 @@ public interface UserService {
      */
     public User login(String username, String password);
 
+    /**注册
+     *
+     * @param username
+     * @param password
+     * @param email
+     * @return
+     */
+    int register(String username, String password, String  email);
+
     User selectUserByUsername(String username);
 
 

@@ -55,6 +55,16 @@ public interface UserMapper {
     @Update("update `user` set username=#{username}, password=#{password}, image=#{image}, email=#{email}, is_active=#{isActive} where id = #{id}")
     public void updateUser(User user);
 
+    /**
+     * 注册
+     * @param username
+     * @param password
+     * @param email
+     * @return
+     */
+    @Insert("insert into user values(null, #{username},#{password},null, #{email},null)")
+    public int register(String username, String password, String  email);
+
 
     /**
      * 根据用户名，密码查询用户
