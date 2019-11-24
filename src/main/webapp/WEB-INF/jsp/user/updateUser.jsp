@@ -16,26 +16,22 @@
 </head>
 <body>
 <div style="width: 60%;margin: auto;padding: auto">
-
-
     <div class="row">
-        <h1>个人信息</h1>
+        <h2>当前个人信息</h2>
     </div>
 
     用户名：<c:out value="${user.username}" /><br/><br/>
     密码：<c:out value="${user.password}" /><br/><br/>
-    　邮箱：<c:out value="${user.email}" /><br/><br/>
-
-
-
+    邮箱：<c:out value="${user.email}" /><br/><br/>
     <div class="row">
-        <h1>个人信息修改</h1>
+        <h2>修改个人信息</h2>
     </div>
 
     <form action="/user/update" method="post">
         用户名：<input type="username" name="username"><br>
-        密码：   <input type="password" name="password"><br>
-        邮箱：   <input type="text" name="email"><br>
+         密码：   <input type="password" name="password"><br>
+         邮箱：   <input type="text" name="email"><br>
+        <br>
         <input type="submit" value="确认修改">
         <div>${msg}</div>
     </form>

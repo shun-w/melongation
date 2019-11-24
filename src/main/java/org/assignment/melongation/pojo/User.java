@@ -28,6 +28,7 @@ public class User {
         this.username = username;
         this.password = password;
         this.email = email;
+        this.isActive = true;
     }
 
     public User(Integer id) {
