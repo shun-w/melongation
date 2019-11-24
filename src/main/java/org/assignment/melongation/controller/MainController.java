@@ -36,16 +36,25 @@ public class MainController {
     private HttpServletRequest request;
 
     @GetMapping("/{paperId}")
-    public String fillInPaper(@PathVariable("paperId") Integer paperId, Model model){
+    public String fillInPaper(@PathVariable("paperId") Integer paperId, Model model) {
         Paper paper = paperService.getCheckedPaper(paperId);
-        model.addAttribute("paper",paper);
+        model.addAttribute("paper", paper);
         return "fillInPaper";
     }
 
-    @PostMapping("/{paperId}")
+    /**
+     * 提交问卷
+     *
+     * @param answer
+     * @return
+     */
+    @PostMapping("/fillPaper")
     @ResponseBody
-    public ResponseEntity<String> postFillInPaper(@PathVariable("paperId") Integer paperId, Answer answer){
-        System.out.println(answer.toString());
+
+    public ResponseEntity<String> postFillInPaper(@RequestBody List<Answer> answers) {
+        System.out.println(answers.toString());
+
+        answerService.saveQuestion(answers);
 
         return ResponseEntity.ok(new String("感谢填写！！"));
     }
@@ -53,7 +62,7 @@ public class MainController {
 
     @GetMapping("/")
     public String main(Model model) {
-        model.addAttribute("msg","hello melongation");
+        model.addAttribute("msg", "hello melongation");
         return "index";
     }
 
