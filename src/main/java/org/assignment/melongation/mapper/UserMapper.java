@@ -5,6 +5,7 @@ import org.assignment.melongation.pojo.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * User持久层代码
@@ -98,4 +99,25 @@ public interface UserMapper {
      */
     @Select("select * from `user` where username=#{username}")
     User selectUserByUsername(@Param("username") String username);
+
+    /**
+     * 用户模糊查询
+     * @param keyWord
+     * @return
+     */
+    @Select("select * from user where username like '%${keyWord}%'")
+    public List<User> searchUserByKeyword(@Param("keyWord") String keyWord);
+
+    /**
+     * 用户账号查询总条数
+     */
+    @Select(value = "select count(*) from user")
+    int getCount();
+
+    /**
+     * 用户
+     * 分页查询
+     */
+    @Select(value = "select * from user limit #{pageNo},#{pageSize}")
+    List<User> pageList(Map map);
 }
