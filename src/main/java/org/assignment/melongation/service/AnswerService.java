@@ -28,6 +28,8 @@ public interface AnswerService {
      */
     public List<Answer> findAll();
 
+    void saveQuestion(List<Answer> answer);
+
     /**
      *依据问题id查找答案
      *

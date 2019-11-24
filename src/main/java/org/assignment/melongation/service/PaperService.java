@@ -2,6 +2,7 @@ package org.assignment.melongation.service;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
+import org.assignment.melongation.pojo.Answer;
 import org.assignment.melongation.pojo.Paper;
 import org.assignment.melongation.pojo.Question;
 
@@ -11,7 +12,6 @@ public interface PaperService {
 
 
     void addPaper(Paper paper);
-
 
     PageInfo<Paper> findAllPaper (int i);
 
@@ -24,4 +24,8 @@ public interface PaperService {
    void checkPaper(int id);
 
     Paper getCheckedPaper(Integer paperId);
+
+
+    PageInfo<Paper> findAllPaperByUser(int pageNo,int id );
+
 }

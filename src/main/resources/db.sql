@@ -5,67 +5,71 @@ drop table if exists `paper`;
 drop table if exists `user`;
 
 # 管理员
-create table `admin`(
-                        id int primary key auto_increment,
-                        username varchar(10),
-                        `password` varchar(20),
-                        image varchar(100),
-                        email varchar(30)
+create table `admin`
+(
+    id         int primary key auto_increment,
+    username   varchar(10),
+    `password` varchar(20),
+    image      varchar(100),
+    email      varchar(30)
 );
 
 # 用户
-create table `user`(
-                       id int primary key auto_increment,
-                       username varchar(10),
-                       `password` varchar(20),
-                       image varchar(100),
-                       email varchar(30),
-                       is_active tinyint
+create table `user`
+(
+    id         int primary key auto_increment,
+    username   varchar(10),
+    `password` varchar(20),
+    image      varchar(100),
+    email      varchar(30),
+    is_active  tinyint
 );
 
 
 # 问卷
-create table `paper`(
-                        id int primary key auto_increment,
-                        user_id int,
-                        title varchar(1000),
-                        description varchar(2000),
-                        create_time datetime,
-                        submit_number int,
-                        is_checked tinyint,
-                        foreign key (user_id) references user(id)
+create table `paper`
+(
+    id            int primary key auto_increment,
+    user_id       int,
+    title         varchar(1000),
+    description   varchar(2000),
+    create_time   datetime,
+    submit_number int,
+    is_checked    tinyint,
+    foreign key (user_id) references user (id)
 );
 
 
 # 问卷的问题
 create table `question`
 (
-    id int primary key auto_increment,
-    paper_id int,
-    type int,
-    content varchar(2000),
-    must_answer tinyint,
+    id           int primary key auto_increment,
+    paper_id     int,
+    type         int,
+    content      varchar(2000),
+    must_answer  tinyint,
     order_number int,
-    foreign key (paper_id) references paper(id)
+    foreign key (paper_id) references paper (id)
 );
 
 
 # 问卷填写的答案
-create table  `answer`(
-                          id int primary key auto_increment,
-                          question_id int,
-                          answer varchar(1000),
-                          foreign key (question_id) references question(id)
+create table `answer`
+(
+    id          int primary key auto_increment,
+    question_id int,
+    answer      varchar(1000),
+    foreign key (question_id) references question (id)
 );
 
 
-insert into `user` values
-(1, '李四','1234567','','321@qq.com',1),
-(2, '王五','22345678','','233@qq.com',1);
+insert into `user`
+values (1, '李四', '1234567', '', '321@qq.com', 1),
+       (2, '王五', '22345678', '', '233@qq.com', 1);
 
 
-insert into `admin` values
-(1,'张三','12345678','','123@qq.com');
+insert into `admin`
+values (1, '张三', '12345678', '', '123@qq.com');
 
 
 -- 初始化一张问卷
@@ -97,31 +101,31 @@ insert into `admin` values
 
 -- 插入问卷
 insert into `paper`
-values (1, 1, '关于睡眠情况调查','想当今大学生睡眠情况','2018-11-22 12:23:32',2,1);
+values (1, 1, '关于睡眠情况调查', '想当今大学生睡眠情况', '2018-11-22 12:23:32', 2, 1);
 
 -- 插入问卷内容
 insert into question
-values (1, 1, 1, '{"你现在几年级":[{"A":"大一"},{"B":"大二"},{"C":"大三"},{"C":"大四"}]}',1,1 );
+values (1, 1, 1, '{"你现在几年级":[{"A":"大一"},{"B":"大二"},{"C":"大三"},{"D":"大四"}]}', 1, 1);
 insert into question
-values (2, 1, 2, '{"睡前喜欢做什么":[{"A":"玩手机"},{"B":"玩电脑"},{"C":"学习"}]}',1,2 );
+values (2, 1, 2, '{"睡前喜欢做什么":[{"A":"玩手机"},{"B":"玩电脑"},{"C":"学习"}]}', 1, 2);
 insert into question
-values (3, 1, 3, '你对当今大学生睡眠问题有什么看法',0,3 );
+values (3, 1, 3, '你对当今大学生睡眠问题有什么看法', 0, 3);
 insert into question
-values (4, 1, 1, '{"你性别":[{"A":"男"},{"B":"女"}]}',1,4 );
+values (4, 1, 1, '{"你性别":[{"A":"男"},{"B":"女"}]}', 1, 4);
 
 
 -- 插入问卷填写
 insert into answer
-values (null,1,'A');
+values (null, 1, 'A');
 insert into answer
-values (null,2,'AB');
+values (null, 2, 'AB');
 insert into answer
-values (null,3,'没有看法');
+values (null, 3, '没有看法');
 
 insert into answer
-values (null,1,'C');
+values (null, 1, 'C');
 insert into answer
-values (null,2,'AC');
+values (null, 2, 'AC');
 insert into answer
-values (null,3,'应该好好睡觉');
+values (null, 3, '应该好好睡觉');
 

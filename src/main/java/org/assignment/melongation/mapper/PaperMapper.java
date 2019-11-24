@@ -101,7 +101,6 @@ public interface PaperMapper {
 
     }
     )
-
     @Select("select * from paper where id=#{id}")
     public Paper findPaperById(@Param("id")Integer id);
 
