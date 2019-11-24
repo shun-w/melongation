@@ -22,10 +22,10 @@
 
     <form action="/register" method="post">
         用户名：<input type="username" name="username"><br>
-          密码：   <input type="password" name="password"><br>
-          邮箱：   <input type="text" name="email"><br>
+        密码： <input type="password" name="password"><br>
+        邮箱： <input type="text" name="email"><br>
         <input type="submit" value="注册">
-        <div>${msg}</div>
+        <div style="color: red">${msg}</div>
     </form>
 </div>
 </body>

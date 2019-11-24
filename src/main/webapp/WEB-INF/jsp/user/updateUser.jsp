@@ -16,25 +16,26 @@
 </head>
 <body>
 <div style="width: 60%;margin: auto;padding: auto">
-    <div class="row">
-        <h2>当前个人信息</h2>
-    </div>
+<%--    <div class="row">--%>
+<%--        <h2>当前个人信息</h2>--%>
+<%--    </div>--%>
 
-    用户名：<c:out value="${user.username}" /><br/><br/>
-    密码：<c:out value="${user.password}" /><br/><br/>
-    邮箱：<c:out value="${user.email}" /><br/><br/>
+<%--    用户名：<c:out value="${user.username}" /><br/><br/>--%>
+<%--    密码：<c:out value="${user.password}" /><br/><br/>--%>
+<%--    邮箱：<c:out value="${user.email}" /><br/><br/>--%>
     <div class="row">
         <h2>修改个人信息</h2>
     </div>
 
     <form action="/user/update" method="post">
-        用户名：<input type="username" name="username"><br>
-         密码：   <input type="password" name="password"><br>
-         邮箱：   <input type="text" name="email"><br>
+        用户名：<input type="username" name="username" value="${user.username}"><br>
+         密码：   <input type="password" name="password" value="${user.password}"><br>
+         邮箱：   <input type="text" name="email" value="${user.email}"><br>
         <br>
-        <input type="submit" value="确认修改">
-        <div>${msg}</div>
+        <input type="submit" value="确认修改"><br>
+        <div style="color: red">${msg}</div>
     </form>
+
 </div>
 </body>
 </html>

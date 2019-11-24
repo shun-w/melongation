@@ -18,13 +18,13 @@
 
 </head>
 <body>
-<a href="<c:url value="/" />">返回首页</a>
+<a href="<c:url value="/user" />">返回首页</a>
 <div class="paperList">
     <h1>问卷列表</h1>
     <b>这里会列出你发布的所有问卷</b>
     <table border="1" cellspacing="0">
         <tr>
-            <th>问卷id</th>
+            <th>问卷填写链接</th>
 
             <th>问卷标题</th>
 
@@ -38,7 +38,7 @@
         </tr>
         <c:forEach items="${papers.list}" var="paper">
             <tr>
-                <td>${paper.id}</td>
+                <td><a href="http://localhost:8090/${paper.id}">http://localhost:8090/${paper.id}</a></td>
                 <td>${paper.title}</td>
                 <td>${paper.description}</td>
                 <td>

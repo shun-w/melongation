@@ -37,4 +37,10 @@ public class UserMapperTest {
         System.out.println("x");
 
     }
+
+//    @Test
+//    public void testSaveUser(){
+//        User user = new User(null,"4132","1243","423");
+//        userMapper.saveUser(user);
+//    }
 }

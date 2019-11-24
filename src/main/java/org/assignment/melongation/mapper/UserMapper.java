@@ -139,4 +139,13 @@ public interface UserMapper {
      */
     @Update("update user set is_active=#{isActive} where id = #{userId}")
     public void setIsActive(int isActive,int userId);
+
+
+    /**
+     * 用户模糊查询
+     * @param keyWord
+     * @return
+     */
+    @Select("select * from `user` where username like '%${keyWord}%'")
+    List<User> searchAdminByKeyword(@Param("keyWord") String keyWord);
 }

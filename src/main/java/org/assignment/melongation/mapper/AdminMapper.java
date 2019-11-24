@@ -81,5 +81,11 @@ public interface AdminMapper {
     @Select(value = "select * from admin  limit #{pageNo},#{pageSize}")
     List<Admin> pageList(Map map);
 
-
+    /**
+     * 根据用户名，密码查询用户
+     * @param username
+     * @param password
+     */
+    @Select("select * from admin where username=#{username}")
+    Admin selectAdminByUsername(String username);
 }

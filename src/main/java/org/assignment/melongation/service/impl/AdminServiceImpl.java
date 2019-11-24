@@ -105,4 +105,9 @@ public class AdminServiceImpl implements AdminService {
 
     }
 
+    @Override
+    public Admin findAdminByUsername(String username) {
+        return adminMapper.selectAdminByUsername(username);
+    }
+
 }

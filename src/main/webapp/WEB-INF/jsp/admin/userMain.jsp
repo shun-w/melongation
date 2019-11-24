@@ -43,8 +43,8 @@
                 <th>id</th>
                 <th>username</th>
                 <th>email</th>
-               <th>冻结</th>
-                <th>删除</th>
+                <th>冻结</th>
+                <%--                <th>删除</th>--%>
                 <th>修改</th>
             </tr>
             </thead>
@@ -54,15 +54,15 @@
                     <td>${user.id}</td>
                     <td>${user.username}</td>
                     <td>${user.email}</td>
-<%--                    <c:choose>--%>
-                        <c:if test="${user.isActive == true}">
-                            <td><a class="btn btn-primary" href="/admin/isActive?isActive=0&userId=${user.id}">冻结</a></td>
-                        </c:if>
-                        <c:if test="${user.isActive == false}">
-                            <td><a class="btn btn-primary" href="/admin/isActive?isActive=1&userId=${user.id}">解冻</a></td>
-                        </c:if>
-<%--                    </c:choose>--%>
-                    <td><a class="btn btn-primary" onClick="delcfm('http://localhost:8090/admin/deleteUser?id=${user.id}')">delete</a></td>
+                        <%--                    <c:choose>--%>
+                    <c:if test="${user.isActive == true}">
+                        <td><a class="btn btn-primary" href="/admin/isActive?isActive=0&userId=${user.id}">冻结</a></td>
+                    </c:if>
+                    <c:if test="${user.isActive == false}">
+                        <td><a class="btn btn-primary" href="/admin/isActive?isActive=1&userId=${user.id}">解冻</a></td>
+                    </c:if>
+                        <%--                    </c:choose>--%>
+                        <%--                    <td><a class="btn btn-primary" onClick="delcfm('http://localhost:8090/admin/deleteUser?id=${user.id}')">delete</a></td>--%>
                     <td>
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"
                                 data-id="${user.id}" data-username="${user.username}"
@@ -236,10 +236,10 @@
         if (i > 0) {
             return false;
         } else {
-            toastr.success("增加成功！")
+            // toastr.success("增加成功！")
         }
 
-        var data = {"id": null, "username": username, "password": password, "image": null, "email": email,"is_active":1};
+        var data = {id: null, username: username, password: password, image: null, email: email, isActive: 1};
         console.log(data);
 
         //提交
@@ -264,7 +264,7 @@
             error: function (e) {
                 console.log(e.status);
                 console.log(e.responseText);
-                toastr.error("发生错误！");
+                toastr.error("当前用户名已经存在");
             }
         });
 
@@ -330,7 +330,7 @@
         if (i > 0) {
             return false;
         } else {
-            toastr.success("修改成功！")
+            // toastr.success("修改成功！")
         }
 
         var data = {"id": id, "username": username, "password": password, "image": null, "email": email};
@@ -357,7 +357,7 @@
             error: function (e) {
                 console.log(e.status);
                 console.log(e.responseText);
-                toastr.error("发生错误！");
+                toastr.error("当前用户名已经存在");
             }
         });
 
@@ -396,11 +396,11 @@
         var e = event || window.event || arguments.callee.caller.arguments[0];
         if (e && e.keyCode == 13) { // enter 键
             var keyWord = $('#searchWord').val();
-            if(keyWord==""|keyWord==null){
-                window.location.href="http://localhost:8090/admin/userMain";
+            if (keyWord == "" | keyWord == null) {
+                window.location.href = "http://localhost:8090/admin/userMain";
+            } else {
+                window.location.href = "http://localhost:8090/admin/searchUser?keyWord=" + keyWord;
             }
-            else {
-                window.location.href = "http://localhost:8090/admin/searchUser?keyWord=" + keyWord;}
         }
     }
 

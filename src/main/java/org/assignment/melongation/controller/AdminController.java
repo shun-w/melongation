@@ -90,7 +90,8 @@ public class AdminController {
     }
 
     /**
-     *管理员登录页面
+     * 管理员登录页面
+     *
      * @return
      */
     @GetMapping("/login")
@@ -99,7 +100,8 @@ public class AdminController {
     }
 
     /**
-     *管理员登录
+     * 管理员登录
+     *
      * @param username
      * @param password
      * @param checkCode
@@ -118,12 +120,12 @@ public class AdminController {
             Admin admin = adminService.login(username, password);
 
 //            System.out.println(admin.toString());
-            if (admin!= null && admin.getUsername() != null) {
+            if (admin != null && admin.getUsername() != null) {
                 String username1 = URLEncoder.encode(username, "utf-8");
                 Cookie cookie = new Cookie("adminname", username1);
                 cookie.setMaxAge(60 * 60 * 3);
                 resp.addCookie(cookie);
-                session.setAttribute("admin",admin);
+                session.setAttribute("admin", admin);
                 return "redirect:/admin";
             } else {
                 model.addAttribute("msg", "用户名或密码错误,请重新登录");
@@ -138,6 +140,7 @@ public class AdminController {
 
     /**
      * 跳转管理员主界面
+     *
      * @return
      */
 
@@ -148,6 +151,7 @@ public class AdminController {
 
     /**
      * 管理员注销
+     *
      * @param request
      * @param response
      * @return
@@ -156,7 +160,7 @@ public class AdminController {
     public String logout(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         Cookie[] cookies = request.getCookies();
         for (int i = 0; i < cookies.length; i++) {
-            if (cookies[i].getName().equals("username")) {
+            if (cookies[i].getName().equals("adminname")) {
                 cookies[i].setValue("");
                 cookies[i].setMaxAge(0);
                 response.addCookie(cookies[i]);
@@ -168,14 +172,20 @@ public class AdminController {
 
     /**
      * 增加管理员账号
+     *
      * @param admin
      * @return
      */
     @PostMapping("/addAdmin")
     @ResponseBody
-    public ResponseEntity<Void> addAdmin(@RequestBody Admin admin) {
-        adminService.addAdmin(admin);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<String> addAdmin(@RequestBody Admin admin) {
+
+        Admin admin1 = adminService.findAdminByUsername(admin.getUsername());
+        if (admin1 == null) {
+            adminService.addAdmin(admin);
+            return ResponseEntity.ok().body("添加成功！");
+        } else return ResponseEntity.badRequest().body(new String("当前用户名已经存在"));
+
     }
 
     /**
@@ -192,14 +202,14 @@ public class AdminController {
     // }
 
     /**
+     * 删除管理员账号
      *
-     *  删除管理员账号
      * @param id
-
      * @return
      */
     @GetMapping("/delete")
-    public String deleteAdmin(@RequestParam Integer id){
+    public String deleteAdmin(@RequestParam Integer id) {
+
         adminService.deleteAdmin(id);
 
         return "redirect:/admin/adminMain";
@@ -207,157 +217,189 @@ public class AdminController {
 
     /**
      * 修改管理员账号
+     *
      * @param admin
      * @return
      */
     @PostMapping("/edit")
     @ResponseBody
-    public ResponseEntity<Void> edit(@RequestBody Admin admin){
+    public ResponseEntity<String> edit(@RequestBody Admin admin) {
+        Admin admin1 = adminService.findAdminByUsername(admin.getUsername());
+        if (admin1 != null && admin1.getId() != admin.getId()) {
+            return ResponseEntity.badRequest().body(new String("当前用户名已经存在"));
+        }
         adminService.editAdmin(admin);
+        return ResponseEntity.ok().body("修改成功");
 
-        return ResponseEntity.ok().build();
     }
 
     /**
      * 查找管理员账号
+     *
      * @param keyWord
      * @param model
      * @return
      */
     @GetMapping("/search")
-
-    public String search(@RequestParam(value = "keyWord") String keyWord,Model model){
-        List<Admin> admins=adminService.serchAdmins(keyWord);
-        if(admins.isEmpty()){
-            model.addAttribute("msg",1);
-        }else {
+    public String search(@RequestParam(value = "keyWord") String keyWord, Model model) {
+        List<Admin> admins = adminService.serchAdmins(keyWord);
+        if (admins.isEmpty()) {
+            model.addAttribute("msg", 1);
+        } else {
             model.addAttribute("admins", admins);
-            model.addAttribute("msg",2);
+            model.addAttribute("msg", 2);
         }
         return "admin/adminMain";
     }
-
+    /**
+     * 查找用户账号
+     *
+     * @param keyWord
+     * @param model
+     * @return
+     */
+    @GetMapping("/searchUser")
+    public String searchUser(@RequestParam(value = "keyWord") String keyWord, Model model) {
+        System.out.println("开始搜索！！！");
+        List<User> users = userService.serchUsers(keyWord);
+        if (users.isEmpty()) {
+            model.addAttribute("msg", 1);
+        } else {
+            model.addAttribute("users", users);
+            model.addAttribute("msg", 2);
+        }
+        return "admin/userMain";
+    }
 
     /**
      * 跳转问卷管理界面
+     *
      * @return
      */
     @GetMapping("/paperMain")
-    public String paperMain(){
+    public String paperMain() {
         return "admin/paperMain";
     }
 
     /**
      * 展示管理员账号列表
+     *
      * @param pageNumber
      * @param model
      * @return
      */
     @GetMapping("/adminMain")
-    public String page(String pageNumber,Model model){
-        String spPage=pageNumber;
+    public String page(String pageNumber, Model model) {
+        String spPage = pageNumber;
         //设置每页条数
-        int pageSize=5;
+        int pageSize = 5;
         //页数
-        int pageNo=0;
-        if(spPage==null){
-            pageNo=1;
-        }else {
+        int pageNo = 0;
+        if (spPage == null) {
+            pageNo = 1;
+        } else {
             pageNo = Integer.valueOf(spPage);
             if (pageNo < 1) {
                 pageNo = 1;
             }
         }
         //设置最大页数
-        int totalCount=0;
-        int count=adminService.getCount();
-        if(count>0){
-            totalCount=count;
+        int totalCount = 0;
+        int count = adminService.getCount();
+        if (count > 0) {
+            totalCount = count;
         }
-        int maxPage=totalCount%pageSize==0?totalCount/pageSize:totalCount/pageSize+1;
-        if(pageNo>maxPage){
-            pageNo=maxPage;
+        int maxPage = totalCount % pageSize == 0 ? totalCount / pageSize : totalCount / pageSize + 1;
+        if (pageNo > maxPage) {
+            pageNo = maxPage;
         }
-        int tempPageNo=(pageNo-1)*pageSize;
+        int tempPageNo = (pageNo - 1) * pageSize;
         //计算总数量
         //分页查询
-        Map map=new HashMap();
-        map.put("pageNo",tempPageNo);
-        map.put("pageSize",pageSize);
-
-        List<Admin> admins=adminService.pageAdmins(map);
+        Map map = new HashMap();
+        map.put("pageNo", tempPageNo);
+        map.put("pageSize", pageSize);
+        List<Admin> admins = adminService.pageAdmins(map);
         //最后把信息放入model转发到页面把信息带过去
-        model.addAttribute("admins",admins);
-        model.addAttribute("pageNo",pageNo);
-        model.addAttribute("totalCount",totalCount);
-        model.addAttribute("maxPage",maxPage);
+        model.addAttribute("admins", admins);
+        model.addAttribute("pageNo", pageNo);
+        model.addAttribute("totalCount", totalCount);
+        model.addAttribute("maxPage", maxPage);
         return "admin/adminMain";
     }
 
 
-
-
     /**
      * 展示用户列表
+     *
      * @param pageNumber
      * @param model
      * @return
      */
     @GetMapping("/userMain")
-    public String userPage(String pageNumber,Model model){
-        String spPage=pageNumber;
+    public String userPage(String pageNumber, Model model) {
+        String spPage = pageNumber;
         //设置每页条数
-        int pageSize=5;
+        int pageSize = 5;
         //页数
-        int pageNo=0;
-        if(spPage==null){
-            pageNo=1;
-        }else {
+        int pageNo = 0;
+        if (spPage == null) {
+            pageNo = 1;
+        } else {
             pageNo = Integer.valueOf(spPage);
             if (pageNo < 1) {
                 pageNo = 1;
             }
         }
         //设置最大页数
-        int totalCount=0;
-        int count=adminService.getCountOfUser();
-        if(count>0){
-            totalCount=count;
+        int totalCount = 0;
+        int count = adminService.getCountOfUser();
+        if (count > 0) {
+            totalCount = count;
         }
-        int maxPage=totalCount%pageSize==0?totalCount/pageSize:totalCount/pageSize+1;
-        if(pageNo>maxPage){
-            pageNo=maxPage;
+        int maxPage = totalCount % pageSize == 0 ? totalCount / pageSize : totalCount / pageSize + 1;
+        if (pageNo > maxPage) {
+            pageNo = maxPage;
         }
-        int tempPageNo=(pageNo-1)*pageSize;
+        int tempPageNo = (pageNo - 1) * pageSize;
         //计算总数量
         //分页查询
-        Map map=new HashMap();
-        map.put("pageNo",tempPageNo);
-        map.put("pageSize",pageSize);
-        List<User> users=adminService.pageUsers(map);
+        Map map = new HashMap();
+        map.put("pageNo", tempPageNo);
+        map.put("pageSize", pageSize);
+        List<User> users = adminService.pageUsers(map);
         //最后把信息放入model转发到页面把信息带过去
-        model.addAttribute("users",users);
-        model.addAttribute("pageNo",pageNo);
-        model.addAttribute("totalCount",totalCount);
-        model.addAttribute("maxPage",maxPage);
+        model.addAttribute("users", users);
+        model.addAttribute("pageNo", pageNo);
+        model.addAttribute("totalCount", totalCount);
+        model.addAttribute("maxPage", maxPage);
+        List<User> all = userService.findAll();
         return "admin/userMain";
     }
 
 
     /**
      * 增加用户账号
+     *
      * @param user
      * @return
      */
     @PostMapping("/addUser")
     @ResponseBody
-    public ResponseEntity<Void> addUser(@RequestBody User user) {
-        adminService.addUser(user);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<String> addUser(@RequestBody User user) {
+        System.out.println(user.toString());
+        User user1 = userService.selectUserByUsername(user.getUsername());
+        if (user1 == null) {
+//            System.out.println(user.toString());
+            adminService.addUser(user);
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.badRequest().body(new String("当前用户已经存在"));
+        }
     }
 
     @GetMapping("/deleteUser")
-    public String deleteUser(@RequestParam Integer id){
+    public String deleteUser(@RequestParam Integer id) {
         adminService.deleteUser(id);
 
         return "redirect:/admin/userMain";
@@ -365,40 +407,34 @@ public class AdminController {
 
     /**
      * 修改用户账号
+     *
      * @param user
      * @return
      */
     @PostMapping("/editUser")
     @ResponseBody
-    public ResponseEntity<Void> editUser(@RequestBody User user){
+    public ResponseEntity<String> editUser(@RequestBody User user) {
+        User user1 = userService.selectUserByUsername(user.getUsername());
+        if (user1 != null && user1.getId() != user.getId()) {
+            return ResponseEntity.badRequest().body(new String("当前用户已经存在"));
+        }
         adminService.editUser(user);
         return ResponseEntity.ok().build();
     }
 
+
     /**
-     * 查找用户账号
-     * @param keyWord
+     *
+     * @param isActive
+     * @param userId
      * @param model
      * @return
      */
-    @GetMapping("/searchUser")
-    public String searchUser(@RequestParam(value = "keyWord") String keyWord,Model model){
-        List<User> users=adminService.serchUsers(keyWord);
-        if(users.isEmpty()){
-            model.addAttribute("msg",1);
-        }else {
-            model.addAttribute("users", users);
-            model.addAttribute("msg",2);
-        }
-        return "admin/userMain";
-    }
-
     @GetMapping("/isActive")
-    public  String isActive(@RequestParam(value = "isActive") Integer isActive,@RequestParam(value = "userId") Integer userId,Model model){
-        adminService.isActive(isActive,userId);
+    public String isActive(@RequestParam(value = "isActive") Integer isActive, @RequestParam(value = "userId") Integer userId, Model model) {
+        adminService.isActive(isActive, userId);
         return "admin/userMain";
     }
-
 
 
 }

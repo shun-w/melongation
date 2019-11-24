@@ -9,72 +9,30 @@ import java.util.List;
 
 public class User {
     private Integer id;
-    @Size(max = 10, min = 4)
+
     private String username;
 
-    @Size(max = 20, min = 6)
+
     private String password;
-    @NotEmpty
+
     private String image;
-    @Email
+
     private String email;
-    @NotEmpty
+
     private boolean isActive;
 
     private List<Paper> pageList;
 
-    public User(Integer id, @Size(max = 10, min = 4) String username, @Size(max = 20, min = 6) String password, @Email String email) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.isActive = true;
-    }
-
-    public User(Integer id) {
-        this.id = id;
-    }
-
-    public List<Paper> getPageList() {
-        return pageList;
-    }
-
-    public void setPageList(List<Paper> pageList) {
-        this.pageList = pageList;
-    }
-
-    public User() {
-    }
-
-    public User(Integer id, String username, String password, String image, String email, Boolean isActive) {
+    public User(Integer id, String username, String password, String image, String email, boolean isActive) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.image = image;
         this.email = email;
         this.isActive = isActive;
+
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", image='" + image + '\'' +
-                ", email='" + email + '\'' +
-                ", isActive=" + isActive +
-                ", pageList=" + pageList +
-                '}';
-    }
-
-    public boolean getIsActive() {
-        return isActive;
-    }
-
-    public void setIsActive(boolean active) {
-        isActive = active;
-    }
 
     public Integer getId() {
         return id;
@@ -114,5 +72,21 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(boolean active) {
+        isActive = active;
+    }
+
+    public List<Paper> getPageList() {
+        return pageList;
+    }
+
+    public void setPageList(List<Paper> pageList) {
+        this.pageList = pageList;
     }
 }

@@ -115,8 +115,5 @@ public interface AdminService {
     public void isActive(int isActive,int userId);
 
 
-
-
-
-
+    Admin findAdminByUsername(String username);
 }

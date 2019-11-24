@@ -6,7 +6,7 @@
 </head>
 <body>
 
-欢迎您，${username}
+欢迎您，${adminname}
 <a href="/admin/logout">注销</a>
 <br>
 <a href="/admin/adminMain">admin账号管理</a>

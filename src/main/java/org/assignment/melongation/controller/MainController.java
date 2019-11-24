@@ -2,6 +2,7 @@ package org.assignment.melongation.controller;
 
 import org.assignment.melongation.pojo.Answer;
 import org.assignment.melongation.pojo.Paper;
+import org.assignment.melongation.pojo.User;
 import org.assignment.melongation.service.AnswerService;
 import org.assignment.melongation.service.PaperService;
 import org.assignment.melongation.service.UserService;
@@ -46,7 +47,6 @@ public class MainController {
 
 
     /**
-     *
      * @param answers
      * @return
      */
@@ -66,8 +66,10 @@ public class MainController {
         model.addAttribute("msg", "hello melongation");
         return "index";
     }
+
     @Autowired
     UserService userService;
+
     //注册
     @GetMapping("/register")
     public String register() {
@@ -75,12 +77,20 @@ public class MainController {
     }
 
 
-
     @PostMapping("/register")
-    public String register(String username, String password, String email , Model model) throws UnsupportedEncodingException {
+    public String register(String username, String password, String email, Model model) throws UnsupportedEncodingException {
+        if (!email.contains("@") || username.length() < 2 || username.length() > 10 || password.length() < 6 || password.length() > 20) {
+            model.addAttribute("msg", "密码长度必须为6-20,用户名长度为2-10,邮箱地址必须合法!");
+            return "addUser";
+        }
+        User user = userService.selectUserByUsername(username);
+        if(user!=null){
+            model.addAttribute("msg", "当前用户名已经存在！");
+            return "addUser";
+        }
 
-        int answ = userService.register(username, password,email);
-        if (answ ==1) {
+        int answ = userService.register(username, password, email);
+        if (answ == 1) {
             model.addAttribute("msg", "注册成功,请登录");
 
             return "redirect:/user/login";

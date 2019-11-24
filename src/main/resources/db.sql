@@ -96,7 +96,8 @@ values (1, '张三', '12345678', '', '123@qq.com');
 
 -- 问卷填写
 -- 1. A  AB  没有看法
--- 2. C  AC  应该好好睡觉
+-- 2. A  AB  没有看法
+-- 3. C  AC  应该好好睡觉
 
 
 -- 插入问卷
@@ -115,6 +116,13 @@ values (4, 1, 1, '{"你性别":[{"A":"男"},{"B":"女"}]}', 1, 4);
 
 
 -- 插入问卷填写
+insert into answer
+values (null, 1, 'A');
+insert into answer
+values (null, 2, 'AB');
+insert into answer
+values (null, 3, '没有看法');
+
 insert into answer
 values (null, 1, 'A');
 insert into answer

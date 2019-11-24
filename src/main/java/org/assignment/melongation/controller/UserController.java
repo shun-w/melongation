@@ -154,8 +154,41 @@ public class UserController {
     }
 
 
+    /**
+     * 修改个人信息
+     *
+     * @param username
+     * @param password
+     * @param email
+     * @param model
+     * @param request
+     * @param response
+     * @return
+     * @throws UnsupportedEncodingException
+     */
     @PostMapping("/update")
     public String updatePost(String username, String password, String email, Model model, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+
+
+        if (!email.contains("@") || username.length() < 2 || username.length() > 10 || password.length() < 6 || password.length() > 20) {
+            model.addAttribute("msg", "密码长度必须为6-20,用户名长度为2-10,邮箱地址必须合法!");     Cookie[] cookies = request.getCookies();
+            for (int i = 0; i < cookies.length; i++) {
+                if (cookies[i].getName().equals("username")) {
+                    String username1 = URLDecoder.decode(cookies[i].getValue(), "utf-8");
+                    User user = userService.selectUserByUsername(username1);
+                    model.addAttribute("user", user);
+                    int id = user.getId();
+
+                    Cookie cookie = new Cookie("userid", Integer.toString(id));
+                    cookie.setMaxAge(60 * 60 * 3);
+                    response.addCookie(cookie);
+
+                }
+            }
+            return "user/updateUser";
+        }
+
+
         Cookie[] cookies = request.getCookies();
         int id = 0;
         User user;
@@ -165,7 +198,7 @@ public class UserController {
                 id = Integer.parseInt(userid);
             }
         }
-        user = new User(id, username, password, email);
+        user = new User(id, username, password,null,email,true);
         int answ = userService.update(user);
         if (answ == 1) {
             model.addAttribute("msg", "修改成功");
@@ -174,16 +207,16 @@ public class UserController {
                     cookies[i].setMaxAge(0);
                 }
             }
-            username=URLDecoder.decode(username, "utf-8");
+            username = URLDecoder.decode(username, "utf-8");
             Cookie cookie = new Cookie("username", username);
             cookie.setMaxAge(60 * 60 * 3);
             response.addCookie(cookie);
 
-            return "redirect:/user/update";
+            return "redirect:/user";
         } else {
             model.addAttribute("msg", "修改个人信息失败,请重新修改个人信息");
         }
-        return "redirect:/user/update";
+        return "redirect:/user";
     }
 
 
@@ -259,28 +292,12 @@ public class UserController {
         return "/user/papers";
     }
 
-
-//    /**
-//     * 跳转到我的问卷
-//     * @return
-//     */
-//    @GetMapping("/myPapers")
-//    public String myPaper(Model model,@RequestParam int pageNo,HttpSession session){
-//        User user= (User) session.getAttribute("user");
-//        int id=user.getId();
-//        PageInfo<Paper> papers = paperService.findAllPaperByUser(pageNo,id);
-//        model.addAttribute("papers", papers);
-//        return "user/myPapers";
-//
-//    }
-
     /**
      * 查看某个问卷的页面, 以及附带其所有的问题
      *
      * @param model
      * @return
      */
-
     @GetMapping("/getOnePaperAndQuestion")
     public String getOnePaperAndQuestion(Model model, @RequestParam int id) {
         Paper paper = paperService.findPaperById(id);
@@ -321,11 +338,6 @@ public class UserController {
     }
 
 
-//    @GetMapping("/myOnePaper")
-//    public String getOnePaperAndQuestion(Model model, @RequestParam int id) {
-//        Paper paper = paperService.findPaperById(id);
-//        model.addAttribute("paper", paper);
-//        return "/user/myOnePaper";
-//    }
+
 
 }

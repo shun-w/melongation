@@ -21,8 +21,8 @@
 
         #upload {
             padding: 5px 10px;
-            background: #00b0f0;s
-            color: #FFF;
+            background: #00b0f0;
+            s color: #FFF;
             border: none;
             border-radius: 5px;
         }
@@ -55,7 +55,7 @@
                 <th>id</th>
                 <th>username</th>
                 <th>email</th>
-<%--                <th>头像</th>--%>
+                <%--                <th>头像</th>--%>
                 <th>删除</th>
                 <th>修改</th>
             </tr>
@@ -66,20 +66,20 @@
                     <td>${admin.id}</td>
                     <td>${admin.username}</td>
                     <td>${admin.email}</td>
-<%--                    <td>--%>
-<%--                        <img src="${admin.image}"--%>
-<%--                             style="width: 70px;height: 70px; border-radius:250px;overflow: hidden;" alt="无头像"/>--%>
-<%--                                            --%>
-<%--                        <form name="fileUpload" action="http://106.13.162.39:8091/upload/image" method="post" enctype="multipart/form-data">--%>
-<%--                            <input name="file" type="file" style="display: inline" onchange="uploadImage(this)">--%>
-<%--                       </form>--%>
+                        <%--                    <td>--%>
+                        <%--                        <img src="${admin.image}"--%>
+                        <%--                             style="width: 70px;height: 70px; border-radius:250px;overflow: hidden;" alt="无头像"/>--%>
+                        <%--                                            --%>
+                        <%--                        <form name="fileUpload" action="http://106.13.162.39:8091/upload/image" method="post" enctype="multipart/form-data">--%>
+                        <%--                            <input name="file" type="file" style="display: inline" onchange="uploadImage(this)">--%>
+                        <%--                       </form>--%>
 
 
-<%--                        <form>--%>
-<%--                            <input type="hidden" id="data" name="data">--%>
-<%--                            <input type="hidden" id="userId" name="userId" value="${admin.id}">--%>
-<%--                        </form>--%>
-<%--                    </td>--%>
+                        <%--                        <form>--%>
+                        <%--                            <input type="hidden" id="data" name="data">--%>
+                        <%--                            <input type="hidden" id="userId" name="userId" value="${admin.id}">--%>
+                        <%--                        </form>--%>
+                        <%--                    </td>--%>
                     <c:choose>
                         <c:when test="${admin.id==sessionScope.admin.id}">
                             <td>#</td>
@@ -207,54 +207,54 @@
 
 <script>
 
-//     function uploadImage(t){
-// console.log("上传");
-//             var formData = new FormData();
-//             formData.append('file', t.files[0]);
-//             console.log(t.files[0]);
-//             // formData.append('id', $('#p_id').val());
-//             $.ajax({
-//                 url: 'http://106.13.162.39:8091/upload/image' ,
-//                 type: 'post',
-//                 crossDomain: true,
-//                 data: formData,
-//                 dataType: "json",
-//                 async: false,
-//                 cache: false,
-//                 contentType: false,
-//                 processData: false,
-//                 success:function(data){
-//                     console.log(data);
-//                 },
-//                 error:function (returndata){
-//                     alert(returndata);
-//                 }
-//             });
-//
-//         return true;
-//     }
+    //     function uploadImage(t){
+    // console.log("上传");
+    //             var formData = new FormData();
+    //             formData.append('file', t.files[0]);
+    //             console.log(t.files[0]);
+    //             // formData.append('id', $('#p_id').val());
+    //             $.ajax({
+    //                 url: 'http://106.13.162.39:8091/upload/image' ,
+    //                 type: 'post',
+    //                 crossDomain: true,
+    //                 data: formData,
+    //                 dataType: "json",
+    //                 async: false,
+    //                 cache: false,
+    //                 contentType: false,
+    //                 processData: false,
+    //                 success:function(data){
+    //                     console.log(data);
+    //                 },
+    //                 error:function (returndata){
+    //                     alert(returndata);
+    //                 }
+    //             });
+    //
+    //         return true;
+    //     }
 
     // $("input[name='file']").change(function () {
     //     console.log("修改头像");
-      // this.parent.submit();
-      //   document.getElementsByName("fileUpload")[0].submit();
-        // window.location.href=
-        // var file = this.files[0];
+    // this.parent.submit();
+    //   document.getElementsByName("fileUpload")[0].submit();
+    // window.location.href=
+    // var file = this.files[0];
 
-        // let data=document.getElementsByName("file")[0].files[0];
-        // if (this.files[0].length == 0) {
-        //     alert("Please upload the image!");
-        //     return false;
-        // } else {
-        //     var extStart = file.name.lastIndexOf('.');
-        //     var ext = file.name.substring(extStart, file.length).toUpperCase();
-        //     if (ext !== '.PNG' && ext !== '.JPG' && ext !== '.JPEG' && ext !== '.GIF') {
-        //         alert("Please upload the correct picture format!");
-        //         this.value=null;
-        //         return false;
-        //     }
-        // console.log(file);
-        //
+    // let data=document.getElementsByName("file")[0].files[0];
+    // if (this.files[0].length == 0) {
+    //     alert("Please upload the image!");
+    //     return false;
+    // } else {
+    //     var extStart = file.name.lastIndexOf('.');
+    //     var ext = file.name.substring(extStart, file.length).toUpperCase();
+    //     if (ext !== '.PNG' && ext !== '.JPG' && ext !== '.JPEG' && ext !== '.GIF') {
+    //         alert("Please upload the correct picture format!");
+    //         this.value=null;
+    //         return false;
+    //     }
+    // console.log(file);
+    //
     //     let formData = new FormData();
     //     formData.append('file', data);
     //     var token = $("meta[name='_csrf']").attr("content");
@@ -286,17 +286,17 @@
     //     });
     //
     // });
-//确认删除提示
-function delcfm(url) {
-    $('#url').val(url);//给会话中的隐藏属性URL赋值
-    $('#delcfmModel').modal();
-}
+    //确认删除提示
+    function delcfm(url) {
+        $('#url').val(url);//给会话中的隐藏属性URL赋值
+        $('#delcfmModel').modal();
+    }
 
-function urlSubmit() {
-    var url = $.trim($("#url").val());//获取会话中的隐藏属性URL
-    toastr.success("删除成功！");
-    window.location.href = url;
-}
+    function urlSubmit() {
+        var url = $.trim($("#url").val());//获取会话中的隐藏属性URL
+        toastr.success("删除成功！");
+        window.location.href = url;
+    }
 
 
     $("#btn_add").click(function () {
@@ -344,7 +344,7 @@ function urlSubmit() {
         if (i > 0) {
             return false;
         } else {
-            toastr.success("增加成功！")
+            // toastr.success("增加成功！")
         }
 
         var data = {"id": null, "username": username, "password": password, "image": null, "email": email};
@@ -372,7 +372,7 @@ function urlSubmit() {
             error: function (e) {
                 console.log(e.status);
                 console.log(e.responseText);
-                toastr.error("发生错误！");
+                toastr.error("用户名已经存在！");
             }
         });
 
@@ -395,10 +395,6 @@ function urlSubmit() {
         $('#txt_parentdepartment').val(password);
         $('#txt_departmentlevel').val(email)
     });
-
-
-
-
 
 
     <!--管理员账号修改ajax提交-->
@@ -442,7 +438,7 @@ function urlSubmit() {
         if (i > 0) {
             return false;
         } else {
-            toastr.success("修改成功！")
+            // toastr.success("修改成功！")
         }
 
         var data = {"id": id, "username": username, "password": password, "image": null, "email": email};
@@ -469,7 +465,7 @@ function urlSubmit() {
             error: function (e) {
                 console.log(e.status);
                 console.log(e.responseText);
-                toastr.error("发生错误！");
+                toastr.error("用户名已经存在！");
             }
         });
 
@@ -508,11 +504,11 @@ function urlSubmit() {
         var e = event || window.event || arguments.callee.caller.arguments[0];
         if (e && e.keyCode == 13) { // enter 键
             var keyWord = $('#searchWord').val();
-            if(keyWord==""|keyWord==null){
-                window.location.href="http://localhost:8090/admin/adminMain";
+            if (keyWord == "" | keyWord == null) {
+                window.location.href = "http://localhost:8090/admin/adminMain";
+            } else {
+                window.location.href = "http://localhost:8090/admin/search?keyWord=" + keyWord;
             }
-            else {
-                window.location.href = "http://localhost:8090/admin/search?keyWord=" + keyWord;}
         }
     }
 
@@ -558,11 +554,11 @@ function urlSubmit() {
     //点击触发搜索事件
     $('#search').click(function () {
         var keyWord = $('#searchWord').val();
-        if(keyWord==""|keyWord==null){
-            window.location.href="http://localhost:8090/admin/adminMain";
+        if (keyWord == "" | keyWord == null) {
+            window.location.href = "http://localhost:8090/admin/adminMain";
+        } else {
+            window.location.href = "http://localhost:8090/admin/search?keyWord=" + keyWord;
         }
-        else {
-        window.location.href = "http://localhost:8090/admin/search?keyWord=" + keyWord;}
     });
 
     $().ready(function () {

@@ -50,7 +50,7 @@
 </head>
 <body>
 
-<a href="<c:url value="/admin/getAllPaper?pageNo=1" />">返回问卷列表</a>
+<a href="<c:url value="/user/getUserPaper" />">返回问卷列表</a>
 
 <h1>问卷信息</h1>
 <h4 style="display: inline">问卷编号：</h4> <c:out value="${paper.id}"/><br/>

@@ -45,6 +45,10 @@ public class UserServiceImpl implements UserService {
         return userMapper.selectUserByUsername(username);
     }
 
+    @Override
+    public List<User> serchUsers(String keyWord) {
+        return userMapper.searchAdminByKeyword(keyWord);
+    }
 
 
 }

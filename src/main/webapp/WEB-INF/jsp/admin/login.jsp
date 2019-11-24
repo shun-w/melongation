@@ -23,7 +23,7 @@
     <a href="#" onclick="changeCheckCode()">换一张</a><br/>
     <input type="reset" value="重置">
     <input type="submit" value="登录">
-    <div>${msg}</div>
+    <div style="color:red;">${msg}</div>
 </form>
 </body>
 </html>

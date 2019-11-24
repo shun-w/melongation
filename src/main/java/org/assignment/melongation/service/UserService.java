@@ -37,5 +37,5 @@ public interface UserService {
     User selectUserByUsername(String username);
 
 
-
+    List<User> serchUsers(String keyWord);
 }
