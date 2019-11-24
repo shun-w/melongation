@@ -81,9 +81,5 @@ public interface AdminMapper {
     @Select(value = "select * from admin  limit #{pageNo},#{pageSize}")
     List<Admin> pageList(Map map);
 
-    /**
-     * 储存图像的src
-     */
-    @Select(value = "update `admin` set image= #{image} where id=#{id}")
-    void uploadImage(Map map);
+
 }

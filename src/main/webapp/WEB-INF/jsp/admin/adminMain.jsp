@@ -34,7 +34,7 @@
 <div class="page-header">
     <h1><a href="/admin/adminMain">admin账号管理</a>
         <small><a href="/admin/userMain">用户管理</a></small>
-        <small><a href="/admin/paperMain">问卷管理</a></small>
+        <small><a href="/admin/getAllPaper?pageNo=1">审核问卷</a></small>
     </h1>
 </div>
 <!--add按钮-->
