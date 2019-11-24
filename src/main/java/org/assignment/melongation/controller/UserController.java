@@ -261,6 +261,7 @@ public class UserController {
         }
         if(username==null) return "user/login";
         PageInfo<Paper> papers = paperService.findUserPaper(pageNo,username);
+        System.out.println();
         model.addAttribute("papers", papers);
         return "/user/papers";}
 
