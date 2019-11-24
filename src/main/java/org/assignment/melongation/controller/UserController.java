@@ -75,8 +75,8 @@ public class UserController {
         String sessionCode = session.getAttribute("code").toString();
         session.removeAttribute("code");
 
-//        if (!StringUtils.isEmpty(checkCode) && !StringUtils.isEmpty(checkCode) && (checkCode.toLowerCase()).equals(sessionCode.toLowerCase())) {
-            if (true){  //test
+        if (!StringUtils.isEmpty(checkCode) && !StringUtils.isEmpty(checkCode) && (checkCode.toLowerCase()).equals(sessionCode.toLowerCase())) {
+//            if (true){  //test
             User user = userService.login(username, password);
             if (user != null && user.getUsername() != null) {
                 String username1 = URLEncoder.encode(username, "utf-8");
