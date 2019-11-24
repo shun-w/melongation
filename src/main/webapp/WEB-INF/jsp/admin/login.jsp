@@ -14,7 +14,7 @@
     </script>
 </head>
 <body>
-登录
+管理员登录
 <form action="/admin/login" method="post">
     <input type="username" name="username"><br>
     <input type="password" name="password"><br>
