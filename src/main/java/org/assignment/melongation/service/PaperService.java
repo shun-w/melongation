@@ -13,7 +13,6 @@ public interface PaperService {
 
     void addPaper(Paper paper);
 
-
     PageInfo<Paper> findAllPaper (int i);
 
     Paper findPaperById(int id);
@@ -22,5 +21,7 @@ public interface PaperService {
 
     Paper getCheckedPaper(Integer paperId);
 
+
+    PageInfo<Paper> findAllPaperByUser(int pageNo,int id );
 
 }

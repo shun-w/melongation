@@ -16,10 +16,40 @@ import java.util.List;
 @Transactional
 public class AnswerServiceImpl implements AnswerService {
 
-    @Autowired
-    private AnswerMapper answerMapper;
+
     @Autowired
     private QuestionMapper questionMapper;
+@Autowired
+    AnswerMapper answerMapper;
+
+
+    /**
+     * 返回题目的答题数据
+     * @param questionId
+     * @return
+     */
+    @Override
+    public int[] getABCDnumber(int questionId) {
+
+        int [] num_ABCD_single= {0, 0, 0, 0};
+
+        int type = questionMapper.selectQuestionById(questionId).getType(); //判断多选还是单选
+
+        List<Answer> answers = answerMapper.selectAnswerByQuestionId(questionId);
+
+        for (Answer answer: answers){
+
+            if (answer.getAnswer().equals("A"))  num_ABCD_single[0]+=1;
+            if (answer.getAnswer().equals("B"))  num_ABCD_single[1]+=1;
+            if (answer.getAnswer().equals("C"))  num_ABCD_single[2]+=1;
+            if (answer.getAnswer().equals("D"))  num_ABCD_single[3]+=1;
+
+        }
+
+        return num_ABCD_single;
+    }
+
+
 
     @Override
     public List<Answer> findAll() {

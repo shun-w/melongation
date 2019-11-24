@@ -5,6 +5,7 @@ import org.assignment.melongation.pojo.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * User持久层代码
@@ -54,6 +55,16 @@ public interface UserMapper {
     @Update("update `user` set username=#{username}, password=#{password}, image=#{image}, email=#{email}, is_active=#{isActive} where id = #{id}")
     public void updateUser(User user);
 
+    /**
+     * 注册
+     * @param username
+     * @param password
+     * @param email
+     * @return
+     */
+    @Insert("insert into user values(null, #{username},#{password},null, #{email},null)")
+    public int register(String username, String password, String  email);
+
 
     /**
      * 根据用户名，密码查询用户
@@ -98,4 +109,25 @@ public interface UserMapper {
      */
     @Select("select * from `user` where username=#{username}")
     User selectUserByUsername(@Param("username") String username);
+
+    /**
+     * 用户模糊查询
+     * @param keyWord
+     * @return
+     */
+    @Select("select * from user where username like '%${keyWord}%'")
+    public List<User> searchUserByKeyword(@Param("keyWord") String keyWord);
+
+    /**
+     * 用户账号查询总条数
+     */
+    @Select(value = "select count(*) from user")
+    int getCount();
+
+    /**
+     * 用户
+     * 分页查询
+     */
+    @Select(value = "select * from user limit #{pageNo},#{pageSize}")
+    List<User> pageList(Map map);
 }

@@ -1,7 +1,9 @@
 package org.assignment.melongation.config;
 
 
+import org.assignment.melongation.interceptor.AdminInterceptor;
 import org.assignment.melongation.interceptor.UserInterceptor;
+import org.assignment.melongation.pojo.Admin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.WebApplicationInitializer;
@@ -16,10 +18,16 @@ public class WebConfig implements WebMvcConfigurer {
     @Autowired
     private UserInterceptor userInterceptor;
 
+    @Autowired
+    private AdminInterceptor adminInterceptor;
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(userInterceptor)
                 .addPathPatterns("/user/**")
                 .excludePathPatterns("/user/login");
+
+        registry.addInterceptor(adminInterceptor)
+                .addPathPatterns("/admin/**")
+                .excludePathPatterns("/admin/login");
     }
 }

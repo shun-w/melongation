@@ -1,10 +1,25 @@
 package org.assignment.melongation.service;
 
+
 import org.assignment.melongation.pojo.Answer;
 
 import java.util.List;
+import org.assignment.melongation.mapper.AnswerMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public interface AnswerService {
+
+
+
+
+        int[] getABCDnumber(int questionId);
+
+
+
+
+
+
+
 
     /**
      * 查询所有提交的答案
@@ -44,4 +59,5 @@ public interface AnswerService {
      * @return 1或0，1表示保存成功
      */
     //public Integer saveAnswer(Answer answer);
+
 }

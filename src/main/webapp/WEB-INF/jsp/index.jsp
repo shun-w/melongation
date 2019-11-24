@@ -9,8 +9,10 @@ ${msg}<hr>
 <h2>欢迎来到Melongation</h2>
 <hr>
 <a href="/user/login">普通用户登录</a><br>
-<a href="/">用户注册</a>
-<a href="#">管理员登陆</a>
+
+<a href="/register">普通用户注册</a><br>
+<a href="/admin/login">管理员登陆</a>
+
 <br>
 </body>
 </html>
