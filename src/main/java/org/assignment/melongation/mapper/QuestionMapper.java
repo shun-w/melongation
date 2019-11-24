@@ -72,5 +72,5 @@ public interface QuestionMapper {
             many = @Many(select = "org.assignment.melongation.mapper.AnswerMapper.selectAnswerByQuestionId"))
     })
     @Select("select * from question where id=#{id}")
-    public List<Question> findQuestionById(@Param("id")Integer id);
+    public List<Question> findQuestionById(@Param("id")Integer id);  //bug here!
 }
