@@ -65,7 +65,7 @@ public interface AdminService {
      * 存储图像src
      * @param map
      */
-    public void uploadImage(Map map);
+//    public void uploadImage(Map map);
 
 
 

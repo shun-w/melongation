@@ -64,10 +64,10 @@ public class AdminServiceImpl implements AdminService {
         return adminMapper.pageList(map);
     }
 
-    @Override
-    public void uploadImage(Map map) {
+//    @Override
+//    public void uploadImage(Map map) {
 //        adminMapper.uploadImage(map);
-    }
+//    }
 
     @Override
     public void deleteUser(Integer id) {
