@@ -1,13 +1,14 @@
 package org.assignment.melongation.controller;
 
 
-import org.assignment.melongation.pojo.Paper;
-import org.assignment.melongation.pojo.Question;
-import org.assignment.melongation.pojo.User;
+import com.github.pagehelper.PageInfo;
+import org.assignment.melongation.mapper.AnswerMapper;
+import org.assignment.melongation.pojo.*;
 import org.assignment.melongation.service.PaperService;
 import org.assignment.melongation.service.QuestionService;
 import org.assignment.melongation.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,6 +39,9 @@ public class UserController {
     UserServiceImpl userService;
     @Autowired
     PaperService paperService;
+
+    @Autowired
+    AnswerMapper answerMapper;
 
     @Autowired
     QuestionService questionService;
@@ -170,4 +174,72 @@ public class UserController {
             System.out.println(question.toString());
         return ResponseEntity.ok().build();
     }
+    /**
+     * 返回paper的列表
+     *
+     * @param model
+     * @return
+     */
+    @GetMapping("/getUserPaper")
+    public String getUserPaper(Model model, Integer pageNo,HttpServletRequest request) throws UnsupportedEncodingException {
+        if (pageNo==null) pageNo = new Integer(1);
+        String username = null;
+        Cookie[] cookies = request.getCookies();
+        for(Cookie c:cookies){
+            if(c.getName().equals("username")) username = URLDecoder.decode(c.getValue(), "utf-8");
+        }
+        if(username==null) return "user/login";
+        PageInfo<Paper> papers = paperService.findUserPaper(pageNo,username);
+        model.addAttribute("papers", papers);
+        return "/user/papers";
+    }
+
+    /**
+     * 查看某个问卷的页面, 以及附带其所有的问题
+     *
+     * @param model
+     * @return
+     */
+    @GetMapping("/getOnePaperAndQuestion")
+    public String getOnePaperAndQuestion(Model model, @RequestParam int id) {
+
+        Paper paper = paperService.findPaperById(id);
+        model.addAttribute("paper", paper);
+
+
+        return "/user/paper";
+    }
+
+    @GetMapping("/selectDetail")
+    public String SelectDetail(Model model,@RequestParam(value = "tid") String tid,@RequestParam(value = "tTitle") String tTitle){
+        //务必在get请求发起之前替换字符串，将{替换为%7b,将}替换为%7d,否则请求会报错
+        String details="";
+        String allSelections="";
+        List<AnswerDistribution> answerDistributionList= answerMapper.findAnswerByIdGrouped(Integer.parseInt(tid));
+        for (AnswerDistribution answerDistribution : answerDistributionList) {
+           details+= answerDistribution.toString();
+           allSelections += answerDistribution.getJsonAnswer();
+        }
+        //务必在get请求发起之前替换字符串，将{替换为%7b,将}替换为%7d,否则请求会报错
+        model.addAttribute("tid",tid);
+        model.addAttribute("tTitle",tTitle);
+        model.addAttribute("details",details);
+        model.addAttribute("allSelections",allSelections);
+
+        return "user/selectDetail";
+    }
+
+    @GetMapping("/paperAnalyze")
+    public String PaperAnalyze(Model model,@RequestParam(value = "tid") String tid,@RequestParam(value = "tTitle") String tTitle){
+        List<AnswerDistribution> answerDistributionList = answerMapper.findAnswerByIdGrouped(Integer.parseInt(tid));
+        for(AnswerDistribution answerDistribution:answerDistributionList){
+            System.out.println(answerDistribution.getAnswer());
+        }
+
+        model.addAttribute("tid",tid);
+        model.addAttribute("tTitle",tTitle);
+        model.addAttribute("answerList",answerDistributionList);
+        return "user/paperAnalyze";
+    }
+
 }

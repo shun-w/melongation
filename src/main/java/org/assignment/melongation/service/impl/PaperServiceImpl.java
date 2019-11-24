@@ -43,6 +43,18 @@ public class PaperServiceImpl implements PaperService {
         return pageInfo;
     }
 
+        @Override
+        public PageInfo<Paper> findUserPaper(int currentPage,String username){
+            int pageSize = 5;
+            PageHelper.startPage(currentPage,pageSize);
+
+            List<Paper> papers = paperMapper.findUserPaper(username);
+
+            PageInfo<Paper> pgInfo = new PageInfo<>(papers);
+
+            return pgInfo;
+        }
+
 
     @Override
     public Paper findPaperById(int id) {

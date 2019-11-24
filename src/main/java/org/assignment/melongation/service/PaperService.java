@@ -15,7 +15,11 @@ public interface PaperService {
 
     PageInfo<Paper> findAllPaper (int i);
 
+    PageInfo<Paper> findUserPaper(int currentPage,String username);
+
     Paper findPaperById(int id);
+
+
 
    void checkPaper(int id);
 

@@ -2,6 +2,7 @@ package org.assignment.melongation.mapper;
 
 import org.apache.ibatis.annotations.*;
 import org.assignment.melongation.pojo.Answer;
+import org.assignment.melongation.pojo.AnswerDistribution;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -57,7 +58,13 @@ public interface AnswerMapper {
     @Select("select * from answer where id=#{id}")
     public Answer findAnswerById(@Param("id") Integer id);
 
-
+    /**
+     * 根据题号查询所有答案的分布状况并按照回答分组
+     * @param tid
+     * @return
+     */
+    @Select("select count(answer) as num,answer from answer where question_id=#{tid} GROUP BY answer")
+    public List<AnswerDistribution> findAnswerByIdGrouped(@Param("tid") Integer tid);
     /**
      * 根据Id查询answer，并查询出关联的question
      * @return
