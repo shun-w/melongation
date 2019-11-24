@@ -20,4 +20,6 @@ public interface PaperService {
    void checkPaper(int id);
 
     Paper getCheckedPaper(Integer paperId);
+
+    PageInfo<Paper> findAllPaperByUser(int pageNo,int id );
 }

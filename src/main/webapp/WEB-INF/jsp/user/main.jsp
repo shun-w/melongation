@@ -18,7 +18,7 @@
 <a href="/user/logout">注销</a>
 <br>
 <a href="/user/addPaper">发布新问卷</a>
-
+<a href="/user/myPapers?pageNo=1">我的问卷</a>
 <br>
 </body>
 </html>

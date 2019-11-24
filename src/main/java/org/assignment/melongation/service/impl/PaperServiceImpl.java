@@ -65,4 +65,18 @@ public class PaperServiceImpl implements PaperService {
         }
         return paper;
     }
+
+    /**
+     * 根据用户id查询问卷，并进行分页
+     * @param pageNo 当前页面的页号
+     * @return
+     */
+    @Override
+    public PageInfo<Paper> findAllPaperByUser(int pageNo,int id) {
+        int pageSize = 5;
+        PageHelper.startPage(pageNo, pageSize);
+        List<Paper> papers = paperMapper.selectPageByUserId(id);
+        PageInfo<Paper> pageInfo = new PageInfo<>(papers);
+        return pageInfo;
+    }
 }

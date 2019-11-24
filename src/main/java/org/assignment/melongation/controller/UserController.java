@@ -1,6 +1,7 @@
 package org.assignment.melongation.controller;
 
 
+import com.github.pagehelper.PageInfo;
 import org.assignment.melongation.pojo.Paper;
 import org.assignment.melongation.pojo.Question;
 import org.assignment.melongation.pojo.User;
@@ -74,6 +75,7 @@ public class UserController {
                 Cookie cookie = new Cookie("username", username1);
                 cookie.setMaxAge(60 * 60 * 3);
                 resp.addCookie(cookie);
+                session.setAttribute("user",user);
                 return "redirect:/user";
             } else {
                 model.addAttribute("msg", "用户名或密码错误,请重新登录");
@@ -97,7 +99,7 @@ public class UserController {
 
 
     @GetMapping("/logout")
-    public String logout(HttpServletRequest request, HttpServletResponse response) {
+    public String logout(HttpServletRequest request, HttpServletResponse response,HttpSession session) {
         Cookie[] cookies = request.getCookies();
         for (int i = 0; i < cookies.length; i++) {
             if (cookies[i].getName().equals("username")) {
@@ -106,6 +108,7 @@ public class UserController {
                 response.addCookie(cookies[i]);
             }
         }
+        session.removeAttribute("user");
         return "redirect:/user/login";
     }
 
@@ -156,7 +159,6 @@ public class UserController {
         }
     }
 
-
     /**
      * 提交问卷的问题
      * @param questions
@@ -169,5 +171,31 @@ public class UserController {
         for (Question question : questions)
             System.out.println(question.toString());
         return ResponseEntity.ok().build();
+    }
+
+    /**
+     * 跳转到我的问卷
+     * @return
+     */
+    @GetMapping("/myPapers")
+    public String myPaper(Model model,@RequestParam int pageNo,HttpSession session){
+        User user= (User) session.getAttribute("user");
+        int id=user.getId();
+        PageInfo<Paper> papers = paperService.findAllPaperByUser(pageNo,id);
+        model.addAttribute("papers", papers);
+        return "user/myPapers";
+    }
+
+    /**
+     * 查看某个问卷的页面, 以及附带其所有的问题
+     *
+     * @param model
+     * @return
+     */
+    @GetMapping("/myOnePaper")
+    public String getOnePaperAndQuestion(Model model, @RequestParam int id) {
+        Paper paper = paperService.findPaperById(id);
+        model.addAttribute("paper", paper);
+        return "/user/myOnePaper";
     }
 }
