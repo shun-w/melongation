@@ -130,4 +130,13 @@ public interface UserMapper {
      */
     @Select(value = "select * from user limit #{pageNo},#{pageSize}")
     List<User> pageList(Map map);
+
+    /**
+     * 用户加解锁
+     * @param isActive
+     * @param userId
+     * @return
+     */
+    @Update("update user set is_active=#{isActive} where id = #{userId}")
+    public void setIsActive(int isActive,int userId);
 }

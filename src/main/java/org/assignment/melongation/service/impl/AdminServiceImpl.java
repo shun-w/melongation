@@ -99,4 +99,10 @@ public class AdminServiceImpl implements AdminService {
         return userMapper.pageList(map);
     }
 
+    @Override
+    public void isActive(int isActive, int userId) {
+        userMapper.setIsActive(isActive,userId);
+
+    }
+
 }

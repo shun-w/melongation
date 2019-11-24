@@ -64,6 +64,8 @@
         <th>题目类型</th>
 
         <th>问题内容</th>
+
+
     </tr>
     <c:forEach items="${paper.questionList}" var="question">
         <tr>

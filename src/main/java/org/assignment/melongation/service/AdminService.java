@@ -107,6 +107,13 @@ public interface AdminService {
      */
     public List<User> pageUsers(Map map);
 
+    /**
+     * 对用户进行加解锁
+     * @param isActive
+     * @param userId
+     */
+    public void isActive(int isActive,int userId);
+
 
 
 

@@ -43,7 +43,7 @@
                 <th>id</th>
                 <th>username</th>
                 <th>email</th>
-                <%--                <th>头像</th>--%>
+               <th>冻结</th>
                 <th>删除</th>
                 <th>修改</th>
             </tr>
@@ -54,6 +54,14 @@
                     <td>${user.id}</td>
                     <td>${user.username}</td>
                     <td>${user.email}</td>
+<%--                    <c:choose>--%>
+                        <c:if test="${user.isActive == true}">
+                            <td><a class="btn btn-primary" href="/admin/isActive?isActive=0&userId=${user.id}">冻结</a></td>
+                        </c:if>
+                        <c:if test="${user.isActive == false}">
+                            <td><a class="btn btn-primary" href="/admin/isActive?isActive=1&userId=${user.id}">解冻</a></td>
+                        </c:if>
+<%--                    </c:choose>--%>
                     <td><a class="btn btn-primary" onClick="delcfm('http://localhost:8090/admin/deleteUser?id=${user.id}')">delete</a></td>
                     <td>
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"
@@ -231,7 +239,7 @@
             toastr.success("增加成功！")
         }
 
-        var data = {"id": null, "username": username, "password": password, "image": null, "email": email};
+        var data = {"id": null, "username": username, "password": password, "image": null, "email": email,"is_active":1};
         console.log(data);
 
         //提交

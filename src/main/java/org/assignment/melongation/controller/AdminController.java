@@ -393,6 +393,12 @@ public class AdminController {
         return "admin/userMain";
     }
 
+    @GetMapping("/isActive")
+    public  String isActive(@RequestParam(value = "isActive") Integer isActive,@RequestParam(value = "userId") Integer userId,Model model){
+        adminService.isActive(isActive,userId);
+        return "admin/userMain";
+    }
+
 
 
 }
