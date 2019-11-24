@@ -27,6 +27,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * admin控制器
+ */
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -251,6 +254,7 @@ public class AdminController {
         }
         return "admin/adminMain";
     }
+
     /**
      * 查找用户账号
      *
@@ -424,7 +428,6 @@ public class AdminController {
 
 
     /**
-     *
      * @param isActive
      * @param userId
      * @param model

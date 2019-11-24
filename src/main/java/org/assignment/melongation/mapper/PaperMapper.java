@@ -7,6 +7,9 @@ import org.assignment.melongation.pojo.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+/**
+ * 持久层
+ */
 @Repository
 public interface PaperMapper {
 

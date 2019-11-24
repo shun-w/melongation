@@ -8,24 +8,58 @@ import org.assignment.melongation.pojo.Question;
 
 import java.util.List;
 
+/**
+ * paper服务
+ */
 public interface PaperService {
 
-
+    /**
+     *
+     * @param paper
+     */
     void addPaper(Paper paper);
 
-    PageInfo<Paper> findAllPaper (int i);
+    /**
+     *
+     * @param i
+     * @return
+     */
+    PageInfo<Paper> findAllPaper(int i);
 
-    PageInfo<Paper> findUserPaper(int currentPage,String username);
+    /**
+     *
+     * @param currentPage
+     * @param username
+     * @return
+     */
+    PageInfo<Paper> findUserPaper(int currentPage, String username);
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     Paper findPaperById(int id);
 
+    /**
+     *
+     * @param id
+     */
+    void checkPaper(int id);
 
-
-   void checkPaper(int id);
-
+    /**
+     *
+     * @param paperId
+     * @return
+     */
     Paper getCheckedPaper(Integer paperId);
 
-
-    PageInfo<Paper> findAllPaperByUser(int pageNo,int id );
+    /**
+     *
+     * @param pageNo
+     * @param id
+     * @return
+     */
+    PageInfo<Paper> findAllPaperByUser(int pageNo, int id);
 
 }

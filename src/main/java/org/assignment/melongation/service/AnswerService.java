@@ -4,21 +4,17 @@ package org.assignment.melongation.service;
 import org.assignment.melongation.pojo.Answer;
 
 import java.util.List;
+
 import org.assignment.melongation.mapper.AnswerMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
+/**
+ * answer服务
+ */
 public interface AnswerService {
 
 
-
-
-        int[] getABCDnumber(int questionId);
-
-
-
-
-
-
+    int[] getABCDnumber(int questionId);
 
 
     /**

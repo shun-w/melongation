@@ -13,6 +13,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
+/**
+ * 配置文件
+ */
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
     @Autowired

@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+/**
+ * 异常处理
+ */
 @ControllerAdvice
 public class ExceptionHandle {
     @ExceptionHandler(MelongationException.class)

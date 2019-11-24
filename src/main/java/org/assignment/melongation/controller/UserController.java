@@ -35,7 +35,9 @@ import java.net.URLEncoder;
 import java.util.Date;
 import java.util.List;
 
-
+/**
+ * user控制器
+ */
 @Controller
 @RequestMapping("/user")
 public class UserController {
@@ -101,7 +103,13 @@ public class UserController {
         return "user/main";
     }
 
-
+    /**
+     * 注销
+     * @param request
+     * @param response
+     * @param session
+     * @return
+     */
     @GetMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         Cookie[] cookies = request.getCookies();
@@ -171,7 +179,8 @@ public class UserController {
 
 
         if (!email.contains("@") || username.length() < 2 || username.length() > 10 || password.length() < 6 || password.length() > 20) {
-            model.addAttribute("msg", "密码长度必须为6-20,用户名长度为2-10,邮箱地址必须合法!");     Cookie[] cookies = request.getCookies();
+            model.addAttribute("msg", "密码长度必须为6-20,用户名长度为2-10,邮箱地址必须合法!");
+            Cookie[] cookies = request.getCookies();
             for (int i = 0; i < cookies.length; i++) {
                 if (cookies[i].getName().equals("username")) {
                     String username1 = URLDecoder.decode(cookies[i].getValue(), "utf-8");
@@ -198,7 +207,7 @@ public class UserController {
                 id = Integer.parseInt(userid);
             }
         }
-        user = new User(id, username, password,null,email,true);
+        user = new User(id, username, password, null, email, true);
         int answ = userService.update(user);
         if (answ == 1) {
             model.addAttribute("msg", "修改成功");
@@ -336,8 +345,6 @@ public class UserController {
         model.addAttribute("answerList", answerDistributionList);
         return "user/paperAnalyze";
     }
-
-
 
 
 }

@@ -5,6 +5,9 @@ import org.assignment.melongation.pojo.Question;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+/**
+ * 持久层
+ */
 @Repository
 public interface QuestionMapper {
 
@@ -72,5 +75,5 @@ public interface QuestionMapper {
             many = @Many(select = "org.assignment.melongation.mapper.AnswerMapper.selectAnswerByQuestionId"))
     })
     @Select("select * from question where id=#{id}")
-    public List<Question> findQuestionById(@Param("id")Integer id);  //bug here!
+    public List<Question> findQuestionById(@Param("id") Integer id);  //bug here!
 }

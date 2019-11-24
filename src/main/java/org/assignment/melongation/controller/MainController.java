@@ -24,7 +24,9 @@ import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 
-
+/**
+ * 公共控制器
+ */
 @Controller
 public class MainController {
 
@@ -84,7 +86,7 @@ public class MainController {
             return "addUser";
         }
         User user = userService.selectUserByUsername(username);
-        if(user!=null){
+        if (user != null) {
             model.addAttribute("msg", "当前用户名已经存在！");
             return "addUser";
         }

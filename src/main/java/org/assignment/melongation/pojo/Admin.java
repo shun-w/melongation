@@ -8,10 +8,10 @@ public class Admin {
 
     private Integer id;
 
-    @Size(max = 10, min=4)
+    @Size(max = 10, min = 4)
     private String username;
 
-    @Size(max = 20, min=6)
+    @Size(max = 20, min = 6)
     private String password;
 
     @NotEmpty

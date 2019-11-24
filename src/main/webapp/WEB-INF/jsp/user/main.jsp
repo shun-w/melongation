@@ -23,8 +23,6 @@
 
 <a href="/user/getUserPaper">查看已发布问卷</a>
 
-
-
 <br>
 </body>
 </html>
