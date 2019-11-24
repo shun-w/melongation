@@ -106,6 +106,8 @@ insert into question
 values (2, 1, 2, '{"睡前喜欢做什么":[{"A":"玩手机"},{"B":"玩电脑"},{"C":"学习"}]}',1,2 );
 insert into question
 values (3, 1, 3, '你对当今大学生睡眠问题有什么看法',0,3 );
+insert into question
+values (4, 1, 1, '{"你性别":[{"A":"男"},{"B":"女"}]}',1,4 );
 
 
 -- 插入问卷填写
