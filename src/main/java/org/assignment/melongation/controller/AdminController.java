@@ -117,7 +117,7 @@ public class AdminController {
         if (!StringUtils.isEmpty(checkCode) && !StringUtils.isEmpty(checkCode) && (checkCode.toLowerCase()).equals(sessionCode.toLowerCase())) {
             Admin admin = adminService.login(username, password);
 
-            System.out.println(admin.toString());
+//            System.out.println(admin.toString());
             if (admin!= null && admin.getUsername() != null) {
                 String username1 = URLEncoder.encode(username, "utf-8");
                 Cookie cookie = new Cookie("adminname", username1);
