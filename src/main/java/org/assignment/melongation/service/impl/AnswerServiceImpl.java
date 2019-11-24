@@ -46,4 +46,8 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
 
+    @Override
+    public List<Answer> findAll(){
+        return answerMapper.findAllAnswer();
+    }
 }

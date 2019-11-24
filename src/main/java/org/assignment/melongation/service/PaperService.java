@@ -18,4 +18,6 @@ public interface PaperService {
     Paper findPaperById(int id);
 
    void checkPaper(int id);
+
+    Paper getCheckedPaper(Integer paperId);
 }

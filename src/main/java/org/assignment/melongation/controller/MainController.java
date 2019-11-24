@@ -1,10 +1,15 @@
 package org.assignment.melongation.controller;
 
+import org.assignment.melongation.pojo.Answer;
+import org.assignment.melongation.pojo.Paper;
+import org.assignment.melongation.service.AnswerService;
+import org.assignment.melongation.service.PaperService;
 import org.assignment.melongation.utils.CodeUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
@@ -13,11 +18,38 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.awt.image.RenderedImage;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 
 @Controller
 public class MainController {
+
+
+    @Autowired
+    private PaperService paperService;
+
+    @Autowired
+    private AnswerService answerService;
+
+    @Autowired
+    private HttpServletRequest request;
+
+    @GetMapping("/{paperId}")
+    public String fillInPaper(@PathVariable("paperId") Integer paperId, Model model){
+        Paper paper = paperService.getCheckedPaper(paperId);
+        model.addAttribute("paper",paper);
+        return "fillInPaper";
+    }
+
+    @PostMapping("/{paperId}")
+    @ResponseBody
+    public ResponseEntity<String> postFillInPaper(@PathVariable("paperId") Integer paperId, Answer answer){
+        System.out.println(answer.toString());
+
+        return ResponseEntity.ok(new String("感谢填写！！"));
+    }
+
 
     @GetMapping("/")
     public String main(Model model) {
@@ -47,6 +79,4 @@ public class MainController {
             e.printStackTrace();
         }
     }
-
-
 }

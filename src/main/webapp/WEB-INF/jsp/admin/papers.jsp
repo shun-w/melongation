@@ -15,10 +15,20 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>问卷列表</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 </head>
 <body>
-<a href="<c:url value="/" />">返回首页</a>
+<div class="page-header">
+    <h1><small><a href="/admin/adminMain">admin账号管理</a></small>
+        <small><a href="/admin/userMain">用户管理</a></small>
+        <a href="/admin/getAllPaper?pageNo=1">审核问卷</a>
+    </h1>
+</div>
 <div class="paperList">
     <h1>问卷列表</h1>
     <table border="1" cellspacing="0">
