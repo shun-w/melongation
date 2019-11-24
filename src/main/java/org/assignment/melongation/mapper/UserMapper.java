@@ -62,7 +62,7 @@ public interface UserMapper {
      * @param email
      * @return
      */
-    @Insert("insert into user values(null, #{username},#{password},null, #{email},null)")
+    @Insert("insert into user values(null, #{username},#{password},null, #{email},1)")
     public int register(String username, String password, String  email);
 
 

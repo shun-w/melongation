@@ -75,15 +75,15 @@ public class UserController {
         String sessionCode = session.getAttribute("code").toString();
         session.removeAttribute("code");
 
-//        if (!StringUtils.isEmpty(checkCode) && !StringUtils.isEmpty(checkCode) && (checkCode.toLowerCase()).equals(sessionCode.toLowerCase())) {
-            if (true){  //test
+        if (!StringUtils.isEmpty(checkCode) && !StringUtils.isEmpty(checkCode) && (checkCode.toLowerCase()).equals(sessionCode.toLowerCase())) {
+//            if (true){  //test
             User user = userService.login(username, password);
             if (user != null && user.getUsername() != null) {
                 String username1 = URLEncoder.encode(username, "utf-8");
                 Cookie cookie = new Cookie("username", username1);
                 cookie.setMaxAge(60 * 60 * 3);
                 resp.addCookie(cookie);
-                session.setAttribute("user",user);
+                session.setAttribute("user", user);
                 return "redirect:/user";
             } else {
                 model.addAttribute("msg", "用户名或密码错误,请重新登录");
@@ -102,12 +102,8 @@ public class UserController {
     }
 
 
-
-
-
-
     @GetMapping("/logout")
-    public String logout(HttpServletRequest request, HttpServletResponse response,HttpSession session) {
+    public String logout(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         Cookie[] cookies = request.getCookies();
         for (int i = 0; i < cookies.length; i++) {
             if (cookies[i].getName().equals("username")) {
@@ -138,14 +134,13 @@ public class UserController {
      * @return
      */
     @GetMapping("/update")
-    public String update(Model model, HttpServletRequest request,HttpServletResponse resp) {
+    public String update(Model model, HttpServletRequest request, HttpServletResponse resp) throws UnsupportedEncodingException {
         Cookie[] cookies = request.getCookies();
-
         for (int i = 0; i < cookies.length; i++) {
             if (cookies[i].getName().equals("username")) {
-                String username =  cookies[i].getValue();
-                 User user =  userService.selectUserByUsername(username);
-                model.addAttribute("user",user);
+                String username = URLDecoder.decode(cookies[i].getValue(), "utf-8");
+                User user = userService.selectUserByUsername(username);
+                model.addAttribute("user", user);
                 int id = user.getId();
 
                 Cookie cookie = new Cookie("userid", Integer.toString(id));
@@ -160,7 +155,7 @@ public class UserController {
 
 
     @PostMapping("/update")
-    public String updatePost(String username, String password, String email , Model model, HttpServletRequest request, HttpServletResponse response) {
+    public String updatePost(String username, String password, String email, Model model, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
         Cookie[] cookies = request.getCookies();
         int id = 0;
         User user;
@@ -170,29 +165,26 @@ public class UserController {
                 id = Integer.parseInt(userid);
             }
         }
-
-
         user = new User(id, username, password, email);
         int answ = userService.update(user);
-                if (answ == 1) {
-                    model.addAttribute("msg", "修改成功");
-                    for (int i = 0; i < cookies.length; i++) {  //更新cookies name的值
-                        if (cookies[i].getName().equals("username")) {
-                            cookies[i].setMaxAge(0);
-                        }
-                    }
-                    Cookie cookie = new Cookie("username", username);
-                    cookie.setMaxAge(60 * 60 * 3);
-                    response.addCookie(cookie);
-
-                    return "redirect:/user/update";
-                } else {
-                    model.addAttribute("msg", "修改个人信息失败,请重新修改个人信息");
-                    }
-                    return "redirect:/user/update";
+        if (answ == 1) {
+            model.addAttribute("msg", "修改成功");
+            for (int i = 0; i < cookies.length; i++) {  //更新cookies name的值
+                if (cookies[i].getName().equals("username")) {
+                    cookies[i].setMaxAge(0);
                 }
+            }
+            username=URLDecoder.decode(username, "utf-8");
+            Cookie cookie = new Cookie("username", username);
+            cookie.setMaxAge(60 * 60 * 3);
+            response.addCookie(cookie);
 
-
+            return "redirect:/user/update";
+        } else {
+            model.addAttribute("msg", "修改个人信息失败,请重新修改个人信息");
+        }
+        return "redirect:/user/update";
+    }
 
 
     /**
@@ -233,6 +225,7 @@ public class UserController {
 
     /**
      * 提交问卷的问题
+     *
      * @param questions
      * @return
      */
@@ -252,17 +245,19 @@ public class UserController {
      * @return
      */
     @GetMapping("/getUserPaper")
-    public String getUserPaper(Model model, Integer pageNo,HttpServletRequest request) throws UnsupportedEncodingException {
-        if (pageNo==null) pageNo = new Integer(1);
+    public String getUserPaper(Model model, Integer pageNo, HttpServletRequest request) throws UnsupportedEncodingException {
+        if (pageNo == null) pageNo = new Integer(1);
         String username = null;
         Cookie[] cookies = request.getCookies();
-        for(Cookie c:cookies){
-            if(c.getName().equals("username")) username = URLDecoder.decode(c.getValue(), "utf-8");
+        for (Cookie c : cookies) {
+            if (c.getName().equals("username")) username = URLDecoder.decode(c.getValue(), "utf-8");
         }
-        if(username==null) return "user/login";
-        PageInfo<Paper> papers = paperService.findUserPaper(pageNo,username);
+        if (username == null) return "user/login";
+        PageInfo<Paper> papers = paperService.findUserPaper(pageNo, username);
+        System.out.println();
         model.addAttribute("papers", papers);
-        return "/user/papers";}
+        return "/user/papers";
+    }
 
 
 //    /**
@@ -294,34 +289,34 @@ public class UserController {
     }
 
     @GetMapping("/selectDetail")
-    public String SelectDetail(Model model,@RequestParam(value = "tid") String tid, @RequestParam(value = "tTitle") String tTitle){
+    public String SelectDetail(Model model, @RequestParam(value = "tid") String tid, @RequestParam(value = "tTitle") String tTitle) {
         //务必在get请求发起之前替换字符串，将{替换为%7b,将}替换为%7d,否则请求会报错
-        String details="";
-        String allSelections="";
-        List<AnswerDistribution> answerDistributionList= answerMapper.findAnswerByIdGrouped(Integer.parseInt(tid));
+        String details = "";
+        String allSelections = "";
+        List<AnswerDistribution> answerDistributionList = answerMapper.findAnswerByIdGrouped(Integer.parseInt(tid));
         for (AnswerDistribution answerDistribution : answerDistributionList) {
-           details+= answerDistribution.toString();
-           allSelections += answerDistribution.getJsonAnswer();
+            details += answerDistribution.toString();
+            allSelections += answerDistribution.getJsonAnswer();
         }
         //务必在get请求发起之前替换字符串，将{替换为%7b,将}替换为%7d,否则请求会报错
-        model.addAttribute("tid",tid);
-        model.addAttribute("tTitle",tTitle);
-        model.addAttribute("details",details);
-        model.addAttribute("allSelections",allSelections);
+        model.addAttribute("tid", tid);
+        model.addAttribute("tTitle", tTitle);
+        model.addAttribute("details", details);
+        model.addAttribute("allSelections", allSelections);
 
         return "user/selectDetail";
     }
 
     @GetMapping("/paperAnalyze")
-    public String PaperAnalyze(Model model,@RequestParam(value = "tid") String tid,@RequestParam(value = "tTitle") String tTitle){
+    public String PaperAnalyze(Model model, @RequestParam(value = "tid") String tid, @RequestParam(value = "tTitle") String tTitle) {
         List<AnswerDistribution> answerDistributionList = answerMapper.findAnswerByIdGrouped(Integer.parseInt(tid));
-        for(AnswerDistribution answerDistribution:answerDistributionList){
+        for (AnswerDistribution answerDistribution : answerDistributionList) {
             System.out.println(answerDistribution.getAnswer());
         }
 
-        model.addAttribute("tid",tid);
-        model.addAttribute("tTitle",tTitle);
-        model.addAttribute("answerList",answerDistributionList);
+        model.addAttribute("tid", tid);
+        model.addAttribute("tTitle", tTitle);
+        model.addAttribute("answerList", answerDistributionList);
         return "user/paperAnalyze";
     }
 

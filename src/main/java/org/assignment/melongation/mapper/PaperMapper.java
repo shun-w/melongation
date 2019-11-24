@@ -33,7 +33,7 @@ public interface PaperMapper {
      * @param paper
      * @return
      */
-    @Insert("insert into `paper` values (null, #{userId}, #{title},  #{description}, #{createTime}, #{submitNumber}, #{isChecked)")
+    @Insert("insert into `paper` values (null, #{userId}, #{title},  #{description}, #{createTime}, #{submitNumber}, #{isChecked})")
     @Options(keyProperty = "id", keyColumn = "id", useGeneratedKeys = true)
     public Integer savePaper(Paper paper);
 
@@ -84,7 +84,7 @@ public interface PaperMapper {
     public List<Paper> findAllPaper();
 
 
-    @Select("select * from paper where id=(select id from user where username = #{username})")
+    @Select("select * from paper where user_id=(select id from user where username = #{username})")
     public List<Paper> findUserPaper(@Param("username")String username);
 
     /**
